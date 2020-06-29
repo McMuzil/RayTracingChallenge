@@ -476,7 +476,7 @@ public:
         return *this;
     }
 
-    bool operator==(const Vector& other)
+    bool operator==(const Vector& other) const
     {
         for (size_t i = 0; i < N; ++i)
         {
@@ -489,7 +489,7 @@ public:
         return true;
     }
 
-    bool operator<(const Vector& other)
+    bool operator<(const Vector& other) const
     {
         for (size_t i = 0; i < N; ++i)
         {
@@ -502,7 +502,7 @@ public:
         return true;
     }
 
-    bool operator>(const Vector& other)
+    bool operator>(const Vector& other) const
     {
         for (size_t i = 0; i < N; ++i)
         {
@@ -515,17 +515,23 @@ public:
         return true;
     }
 
-    friend std::ostream& operator<<(std::ostream& output, Vector& vector)
+    friend std::ostream& operator<<(std::ostream& output, const Vector& vector)
     {
         for (size_t i = 0; i < N; ++i)
         {
-            output << vector.m_data[i] << " ";
+            output << vector.m_data[i];
+
+            assert(N != 0u);
+            if (i != N - 1)
+            {
+                output << " ";
+            }
         }
 
         return output;
     }
 
-    friend std::istream& operator>>(std::istream& input, Vector& vector)
+    friend std::istream& operator>>(std::istream& input, const Vector& vector)
     {
         char delimiter;
         for (size_t i = 0; i < N; ++i)

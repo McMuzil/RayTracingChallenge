@@ -115,6 +115,17 @@ namespace Core
             Assert::IsTrue(Vec4D::IsEqualWithEpsilon(result, expectedResult));
         }
 
+        TEST_METHOD(MultiplyOperatorTest)
+        {
+            const Vec4D first(3.f);
+            const Vec4D second(5.f);
+
+            const Vec4D result = first * second;
+            const Vec4D expectedResult(15.f);
+
+            Assert::IsTrue(Vec4D::IsEqualWithEpsilon(result, expectedResult));
+        }
+
         TEST_METHOD(UnaryMinusOperatorTest)
         {
             const Vec4D first(1.f);
