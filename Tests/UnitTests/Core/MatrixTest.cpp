@@ -469,5 +469,37 @@ namespace Core
 
             Assert::IsTrue(a.IsEqualWithEpsilon(c * b.Inverse()));
         }
+
+        TEST_METHOD(SetRow)
+        {
+            Matrix<4, 4> matrix = Matrix<4, 4>::Identity();
+            const Vec3D row(1, 2, 3);
+
+            matrix.SetRow(3, row);
+            const Matrix<4, 4> expectedResult(
+                { 1, 0, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 1, 0 },
+                { 1, 2, 3, 1 }
+            );
+
+            Assert::IsTrue(expectedResult.IsEqualWithEpsilon(matrix));
+        }
+
+        TEST_METHOD(SetColumn)
+        {
+            Matrix<4, 4> matrix = Matrix<4, 4>::Identity();
+            const Vec3D column(1, 2, 3);
+
+            matrix.SetColumn(3, column);
+            const Matrix<4, 4> expectedResult(
+                { 1, 0, 0, 1 },
+                { 0, 1, 0, 2 },
+                { 0, 0, 1, 3 },
+                { 0, 0, 0, 1 }
+            );
+
+            Assert::IsTrue(expectedResult.IsEqualWithEpsilon(matrix));
+        }
     };
 }

@@ -183,6 +183,29 @@ public:
         return result;
     }
 
+    template<typename Vec = Row>
+    void SetRow(size_t rowNumber, const Vec& vec)
+    {
+        for (size_t i = 0; i < Vec::Size; i++)
+        {
+            m_data[rowNumber][i] = vec[i];
+        }
+    }
+
+    template<typename Vec = Row>
+    void SetColumn(size_t columnNumber, const Vec& vec)
+    {
+        for (size_t i = 0; i < Vec::Size; i++)
+        {
+            m_data[i][columnNumber] = vec[i];
+        }
+    }
+
+    Vec2Du GetSize() const
+    {
+        return Vec2Du(ColumnsNumber, RowsNumber);
+    }
+
     Matrix operator+(const Matrix& other) const
     {
         Matrix matrix;

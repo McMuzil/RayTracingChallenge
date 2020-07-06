@@ -12,10 +12,12 @@
     </ClInclude>
     <ClInclude Include="Core\Canvas.h" />
     <ClInclude Include="Core\Matrix.h" />
+    <ClInclude Include="Core\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Core\Canvas.cpp" />
+    <ClCompile Include="Core\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

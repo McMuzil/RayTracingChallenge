@@ -10,6 +10,7 @@
     </ClCompile>
     <ClCompile Include="Core\CanvasTest.cpp" />
     <ClCompile Include="Core\MatrixTest.cpp" />
+    <ClCompile Include="Core\TransformTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

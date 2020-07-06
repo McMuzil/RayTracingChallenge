@@ -23,10 +23,12 @@
     <ClInclude Include="Core\Canvas.h" />
     <ClInclude Include="Core\Matrix.h" />
     <ClInclude Include="Core\Helpers.h" />
+    <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Canvas.cpp" />
+    <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
