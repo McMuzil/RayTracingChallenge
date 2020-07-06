@@ -15,6 +15,10 @@ template <class T, size_t N>
 class Vector
 {
 public:
+    typedef T type;
+    constexpr static size_t Size = N;
+
+public:
 
     Vector()
     {
@@ -513,6 +517,18 @@ public:
         }
 
         return true;
+    }
+
+    const T& operator[](size_t i) const
+    {
+        assert(i < Size && "Index out of bounds");
+        return m_data[i];
+    }
+
+    T& operator[](size_t i)
+    {
+        assert(i < Size && "Index out of bounds");
+        return m_data[i];
     }
 
     friend std::ostream& operator<<(std::ostream& output, const Vector& vector)

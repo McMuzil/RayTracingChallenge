@@ -9,6 +9,7 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\CanvasTest.cpp" />
+    <ClCompile Include="Core\MatrixTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
