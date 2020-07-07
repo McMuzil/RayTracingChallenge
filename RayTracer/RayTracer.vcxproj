@@ -19,15 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Collision.h" />
+    <ClInclude Include="Core\CollisionInfo.h" />
     <ClInclude Include="Core\Constants.h" />
     <ClInclude Include="Core\Canvas.h" />
     <ClInclude Include="Core\Matrix.h" />
     <ClInclude Include="Core\Helpers.h" />
+    <ClInclude Include="Core\Object.h" />
+    <ClInclude Include="Core\Ray.h" />
+    <ClInclude Include="Core\Sphere.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Canvas.cpp" />
+    <ClCompile Include="Core\Collision.cpp" />
+    <ClCompile Include="Core\Ray.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

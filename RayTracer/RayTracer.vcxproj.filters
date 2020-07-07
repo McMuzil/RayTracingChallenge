@@ -13,11 +13,18 @@
     <ClInclude Include="Core\Canvas.h" />
     <ClInclude Include="Core\Matrix.h" />
     <ClInclude Include="Core\Transform.h" />
+    <ClInclude Include="Core\Ray.h" />
+    <ClInclude Include="Core\Collision.h" />
+    <ClInclude Include="Core\Sphere.h" />
+    <ClInclude Include="Core\CollisionInfo.h" />
+    <ClInclude Include="Core\Object.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Core\Canvas.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
+    <ClCompile Include="Core\Ray.cpp" />
+    <ClCompile Include="Core\Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
