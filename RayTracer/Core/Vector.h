@@ -325,6 +325,34 @@ public:
         return Vector();
     }
 
+    Vector<T, N + 1> AsVector() const
+    {
+        Vector<T, N + 1> vector;
+
+        for (size_t i = 0; i < N; i++)
+        {
+            vector[i] = m_data[i];
+        }
+
+        vector[N] = 0.f;
+
+        return vector;
+    }
+
+    Vector<T, N + 1> AsPoint() const
+    {
+        Vector<T, N + 1> point;
+
+        for (size_t i = 0; i < N; i++)
+        {
+            point[i] = m_data[i];
+        }
+
+        point[N] = 1.f;
+
+        return point;
+    }
+
     static bool IsEqualWithEpsilon(const Vector& first, const Vector& second, float epsilon = Constants::Epsilon)
     {
         const Vector absVec = (first - second).Abs();

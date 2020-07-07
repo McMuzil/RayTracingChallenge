@@ -5,16 +5,16 @@ class Ray
 {
 public:
 
-    Ray(const Vec4D& origin, const Vec4D& direction);
+    Ray(const Vec3D& origin, const Vec3D& direction);
 
-    const Vec4D& GetOrigin() const { return m_origin; }
-    const Vec4D& GetDirection() const { return m_direction; }
+    const Vec3D& GetOrigin() const { return m_origin; }
+    const Vec3D& GetDirection() const { return m_direction; }
 
-    Vec4D GetPointAtDistance(float distance) const;
+    Vec3D GetPointAtDistance(float distance) const;
 
 private:
 
-    Vec4D m_origin;
-    Vec4D m_direction;
-    Vec4D m_normalizedDirection;
+    Vec3D m_origin;
+    Vec3D m_direction;
+    Vec3D m_normalizedDirection;
 };

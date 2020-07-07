@@ -262,22 +262,19 @@ public:
 
     Row operator*(const Row& other) const
     {
-        static_assert(ColumnsNumber == Row::Size, "Trying");
+        static_assert(ColumnsNumber == Row::Size, "Incorrect Size of the vector");
         Row vector;
 
         for (size_t i = 0; i < RowsNumber; i++)
         {
-            for (size_t j = 0; j < Row::Size; j++)
+            T result = T();
+
+            for (size_t k = 0; k < ColumnsNumber; k++)
             {
-                T result = T();
-
-                for (size_t k = 0; k < ColumnsNumber; k++)
-                {
-                    result += m_data[i][k] * other[k];
-                }
-
-                vector[i] = result;
+                result += m_data[i][k] * other[k];
             }
+
+            vector[i] = result;
         }
 
         return vector;

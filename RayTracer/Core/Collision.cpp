@@ -5,7 +5,7 @@
 
 CollisionInfo Collision::Intersect(const Ray& ray, const Sphere& sphere)
 {
-    Vec4D sphereToRay = ray.GetOrigin() - sphere.GetPosition();
+    Vec3D sphereToRay = ray.GetOrigin() - sphere.GetPosition();
 
     const float a = ray.GetDirection().Dot(ray.GetDirection());
     const float b = 2.f * ray.GetDirection().Dot(sphereToRay);

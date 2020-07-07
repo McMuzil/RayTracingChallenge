@@ -1,6 +1,6 @@
 #include "Core/Ray.h"
 
-Ray::Ray(const Vec4D& origin, const Vec4D& direction)
+Ray::Ray(const Vec3D& origin, const Vec3D& direction)
     : m_origin(origin)
     , m_direction(direction)
     , m_normalizedDirection(direction.Normalize())
@@ -8,7 +8,7 @@ Ray::Ray(const Vec4D& origin, const Vec4D& direction)
 
 }
 
-Vec4D Ray::GetPointAtDistance(float distance) const
+Vec3D Ray::GetPointAtDistance(float distance) const
 {
     return m_origin + (m_normalizedDirection * distance);
 }

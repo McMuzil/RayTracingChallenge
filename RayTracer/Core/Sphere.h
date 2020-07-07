@@ -5,10 +5,10 @@ class Sphere : public Object
 {
 public:
 
-    const Vec4D& GetPosition() const { return m_position; }
-    Vec4D& GetPosition() { return m_position; }
+    const Vec3D& GetPosition() const { return m_position; }
+    Vec3D& GetPosition() { return m_position; }
 
 private:
 
-    Vec4D m_position = Vec4D(0, 0, 0, 1);
+    Vec3D m_position;
 };

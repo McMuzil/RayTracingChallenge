@@ -9,7 +9,7 @@ struct CollisionInfo
     struct Hit
     {
         const Object* object;
-        Vec4D point;
+        Vec3D point;
         float distance;
     };
     std::vector<Hit> hits;
