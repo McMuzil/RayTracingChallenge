@@ -1,14 +1,17 @@
 #pragma once
+
+#include "Matrix.h"
 #include "Object.h"
+#include "Vector.h"
 
 class Sphere : public Object
 {
 public:
 
-    const Vec3D& GetPosition() const { return m_position; }
-    Vec3D& GetPosition() { return m_position; }
+    const Matrix<4, 4>& GetTransform() const { return m_transform; }
+    void SetTransform(const Matrix<4, 4>& transform) { m_transform = transform; }
 
 private:
 
-    Vec3D m_position;
+    Matrix<4, 4> m_transform = Matrix<4, 4>::Identity();
 };

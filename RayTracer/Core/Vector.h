@@ -25,8 +25,6 @@ public:
         m_data.fill(T());
     }
 
-    Vector(const Vector&) = default;
-    Vector(Vector&&) = default;
     ~Vector() = default;
 
     Vector(T value)
@@ -35,28 +33,52 @@ public:
     }
 
     Vector(T x, T y)
+        : m_data{ x, y }
     {
-        m_data = { x, y };
     }
 
     Vector(T x, T y, T z)
+        : m_data{ x, y, z }
     {
-        m_data = { x, y, z };
     }
 
     Vector(T x, T y, T z, T w)
+        : m_data{ x, y, z, w }
     {
-        m_data = { x, y, z, w };
     }
 
     Vector(const std::array<T, N>& vec)
+        : m_data(vec)
     {
-        m_data = vec;
     }
 
-    Vector(const std::array<T, N>&& vec)
+    Vector(std::array<T, N>&& vec)
+        : m_data(std::move(vec))
     {
-        m_data = std::move(vec);
+    }
+
+    Vector(const Vector<T, 4>& vec)
+    {
+        Init(vec);
+    }
+
+    Vector(const Vector<T, 3>& vec)
+    {
+        Init(vec);
+    }
+
+    Vector(const Vector<T, 2>& vec)
+    {
+        Init(vec);
+    }
+
+    template <class T, size_t N>
+    void Init(const Vector<T, N>& vec)
+    {
+        for (size_t i = 0; i < Size && vec.Size; i++)
+        {
+            m_data[i] = vec[i];
+        }
     }
 
     const Vector& operator=(Vector&& other)

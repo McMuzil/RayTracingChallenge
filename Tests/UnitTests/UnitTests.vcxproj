@@ -181,8 +181,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\CanvasTest.cpp" />
+    <ClCompile Include="Core\CollisionTest.cpp" />
     <ClCompile Include="Core\HelpersTest.cpp" />
     <ClCompile Include="Core\MatrixTest.cpp" />
+    <ClCompile Include="Core\RayTest.cpp" />
+    <ClCompile Include="Core\SphereTest.cpp" />
     <ClCompile Include="Core\TransformTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

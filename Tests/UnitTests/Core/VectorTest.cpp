@@ -208,5 +208,21 @@ namespace Core
             const Vec4D secondCrossfirst = second.Cross(first);
             Assert::IsTrue(Vec4D::IsEqualWithEpsilon(secondCrossfirst, Vec4D(1.f, -2.f, 1.f)));
         }
+
+        TEST_METHOD(AsVectorTest)
+        {
+            Vec3D point(1, 2, 3);
+            Vec4D vector = point.AsVector();
+
+            Assert::IsTrue(Vec4D::IsEqualWithEpsilon(vector, Vec4D(1, 2, 3, 0)));
+        }
+
+        TEST_METHOD(AsPointTest)
+        {
+            Vec3D vector(1, 2, 3);
+            Vec4D point = vector.AsPoint();
+
+            Assert::IsTrue(Vec4D::IsEqualWithEpsilon(point, Vec4D(1, 2, 3, 1)));
+        }
 	};
 }

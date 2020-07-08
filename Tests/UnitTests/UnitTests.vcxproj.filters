@@ -11,6 +11,9 @@
     <ClCompile Include="Core\CanvasTest.cpp" />
     <ClCompile Include="Core\MatrixTest.cpp" />
     <ClCompile Include="Core\TransformTest.cpp" />
+    <ClCompile Include="Core\RayTest.cpp" />
+    <ClCompile Include="Core\CollisionTest.cpp" />
+    <ClCompile Include="Core\SphereTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

@@ -1,27 +1,52 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 
 #include "Core/Vector.h"
 #include "Core/Matrix.h"
+#include "Core/Canvas.h"
+#include "Core/Sphere.h"
+#include "Core/Ray.h"
+#include "Core/CollisionInfo.h"
+#include "Core/Collision.h"
 
 int main()
 {
-    Matrix<4, 4> empty;
-    Matrix<4, 4> empty1{ { 1.f } };
-    Matrix<4, 4> empty2{ { 1.f }, { 1.f } };
-    Matrix<4, 4> empty3{ { 1.f }, { 1.f }, { 1.f } };
-    Matrix<4, 4> empty4{ { 1.f }, { 1.f }, { 1.f }, { 1.f } };
+    Canvas canvas(1000, 1000);
+    Vec4D color(1, 0, 0);
+    Sphere sphere;
+    Vec3D rayOrigin(0, 0, -5);
+    float wallZ = 10.f;
+    float wallSize = 7.f;
+    float pixelWidth = wallSize / canvas.GetWidth();
+    float pixelheight = wallSize / canvas.GetHeight();
+    float half = wallSize / 2.f;
 
-    Matrix<2, 2> w({ 1.f });
-    Matrix<3, 3> m(
-        { 1.f, 1.f, 1.f },
-        { 1.f, 1.f, 1.f },
-        { 1.f, 1.f, 1.f }
-        );
-    Vec2D vec;
+    for (size_t y = 0; y < canvas.GetHeight(); y++)
+    {
+        float worldY = half - pixelWidth * y;
 
-    std::cout << vec << std::endl;
+        for (size_t x = 0; x < canvas.GetWidth(); x++)
+        {
+            float worldX = -half + pixelheight * x;
+
+            Vec3D position(worldX, worldY, wallZ);
+
+            Ray ray(rayOrigin, (position - rayOrigin).Normalize());
+            CollisionInfo info = Collision::Intersect(ray, sphere);
+
+            const CollisionInfo::Hit* hit = info.GetFirstHit();
+            if (hit)
+            {
+                canvas.SetPixel(color, x, y);
+            }
+        }
+    }
+
+    std::ofstream file("image.ppm");
+    file << canvas.ToPPM().c_str() << std::endl;
+    file.close();
 
     return 0;
 }
