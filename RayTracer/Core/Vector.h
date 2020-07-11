@@ -75,7 +75,8 @@ public:
     template <class T, size_t N>
     void Init(const Vector<T, N>& vec)
     {
-        for (size_t i = 0; i < Size && vec.Size; i++)
+        m_data.fill(T());
+        for (size_t i = 0; i < std::min(Size, vec.Size); i++)
         {
             m_data[i] = vec[i];
         }

@@ -35,6 +35,7 @@
     <ClCompile Include="Core\Canvas.cpp" />
     <ClCompile Include="Core\Collision.cpp" />
     <ClCompile Include="Core\Ray.cpp" />
+    <ClCompile Include="Core\Sphere.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

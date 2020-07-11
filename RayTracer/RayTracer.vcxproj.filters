@@ -25,6 +25,7 @@
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Core\Ray.cpp" />
     <ClCompile Include="Core\Collision.cpp" />
+    <ClCompile Include="Core\Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
