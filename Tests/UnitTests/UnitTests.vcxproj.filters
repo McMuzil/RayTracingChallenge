@@ -14,9 +14,12 @@
     <ClCompile Include="Core\RayTest.cpp" />
     <ClCompile Include="Core\CollisionTest.cpp" />
     <ClCompile Include="Core\SphereTest.cpp" />
+    <ClCompile Include="Core\PointLightTest.cpp" />
+    <ClCompile Include="Core\MaterialTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Helpers.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

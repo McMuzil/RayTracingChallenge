@@ -23,9 +23,11 @@
     <ClInclude Include="Core\CollisionInfo.h" />
     <ClInclude Include="Core\Constants.h" />
     <ClInclude Include="Core\Canvas.h" />
+    <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\Matrix.h" />
     <ClInclude Include="Core\Helpers.h" />
     <ClInclude Include="Core\Object.h" />
+    <ClInclude Include="Core\PointLight.h" />
     <ClInclude Include="Core\Ray.h" />
     <ClInclude Include="Core\Sphere.h" />
     <ClInclude Include="Core\Transform.h" />

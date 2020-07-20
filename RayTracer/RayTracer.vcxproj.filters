@@ -18,6 +18,8 @@
     <ClInclude Include="Core\Sphere.h" />
     <ClInclude Include="Core\CollisionInfo.h" />
     <ClInclude Include="Core\Object.h" />
+    <ClInclude Include="Core\PointLight.h" />
+    <ClInclude Include="Core\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

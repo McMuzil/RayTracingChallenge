@@ -376,6 +376,11 @@ public:
         return point;
     }
 
+    static Vector Reflect(const Vector& vec, const Vector& normal)
+    {
+        return vec - normal * 2.f * vec.Dot(normal);
+    }
+
     static bool IsEqualWithEpsilon(const Vector& first, const Vector& second, float epsilon = Constants::Epsilon)
     {
         const Vector absVec = (first - second).Abs();
@@ -389,6 +394,11 @@ public:
         }
 
         return true;
+    }
+
+    bool IsEqualWithEpsilon(const Vector& other, float epsilon = Constants::Epsilon) const
+    {
+        return Vector::IsEqualWithEpsilon(*this, other, epsilon);
     }
 
     Vector operator-() const

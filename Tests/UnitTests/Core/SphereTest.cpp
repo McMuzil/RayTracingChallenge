@@ -83,5 +83,23 @@ namespace Core
             const Vec3D normal = s.NormalAt(0, f, -f);
             Assert::IsTrue(Vec3D::IsEqualWithEpsilon(Vec3D(0, 0.97014f, -0.24254f), normal));
         }
+
+        TEST_METHOD(DefaultMaterial)
+        {
+            const Sphere sphere;
+
+            Assert::AreEqual(sphere.GetMaterial(), Material());
+        }
+
+        TEST_METHOD(SetMaterialTest)
+        {
+            Sphere sphere;
+
+            Material material = sphere.GetMaterial();
+            material.SetAmbient(1.f);
+            sphere.SetMaterial(material);
+
+            Assert::AreEqual(sphere.GetMaterial(), material);
+        }
     };
 }

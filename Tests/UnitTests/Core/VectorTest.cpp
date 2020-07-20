@@ -224,5 +224,28 @@ namespace Core
 
             Assert::IsTrue(Vec4D::IsEqualWithEpsilon(point, Vec4D(1, 2, 3, 1)));
         }
+
+        TEST_METHOD(Reflect45Defree)
+        {
+            const Vec3D vec(1, -1, 0);
+            const Vec3D normal(0, 1, 0);
+
+            const Vec3D reflectedVec = Vec3D::Reflect(vec, normal);
+            const Vec3D expectedVec(1, 1, 0);
+
+            Assert::IsTrue(Vec3D::IsEqualWithEpsilon(expectedVec, reflectedVec));
+        }
+
+        TEST_METHOD(ReflectArbitrary)
+        {
+            const Vec3D vec(0, -1, 0);
+            const float f = sqrt(2.f) / 2.f;
+            const Vec3D normal(f, f, 0);
+
+            const Vec3D reflectedVec = Vec3D::Reflect(vec, normal);
+            const Vec3D expectedVec(1, 0, 0);
+
+            Assert::IsTrue(Vec3D::IsEqualWithEpsilon(expectedVec, reflectedVec));
+        }
 	};
 }

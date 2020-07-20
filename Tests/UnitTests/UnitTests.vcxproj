@@ -183,7 +183,9 @@
     <ClCompile Include="Core\CanvasTest.cpp" />
     <ClCompile Include="Core\CollisionTest.cpp" />
     <ClCompile Include="Core\HelpersTest.cpp" />
+    <ClCompile Include="Core\MaterialTest.cpp" />
     <ClCompile Include="Core\MatrixTest.cpp" />
+    <ClCompile Include="Core\PointLightTest.cpp" />
     <ClCompile Include="Core\RayTest.cpp" />
     <ClCompile Include="Core\SphereTest.cpp" />
     <ClCompile Include="Core\TransformTest.cpp" />
@@ -196,6 +198,7 @@
     <ClCompile Include="Core\VectorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
