@@ -10,12 +10,17 @@
 #include "Core/Ray.h"
 #include "Core/CollisionInfo.h"
 #include "Core/Collision.h"
+#include "Core/PointLight.h"
+#include "Core/Lighting.h"
 
 int main()
 {
-    Canvas canvas(1000, 1000);
-    Vec4D color(1, 0, 0);
+    Canvas canvas(200, 200);
+    PointLight pointLight(Vec3D(-10, 10, -10), Vec3D(1, 1, 1));
     Sphere sphere;
+    Material material;
+    material.SetColor(Vec3D(1.f, 0.2f, 1.f));
+    sphere.SetMaterial(material);
     Vec3D rayOrigin(0, 0, -5);
     float wallZ = 10.f;
     float wallSize = 7.f;
@@ -39,6 +44,10 @@ int main()
             const CollisionInfo::Hit* hit = info.GetFirstHit();
             if (hit)
             {
+                Vec3D normal = hit->object->NormalAt(hit->point);
+                Vec3D toEye = -ray.GetDirection();
+                Vec3D color = Lighting::Calculate(hit->object->GetMaterial(), pointLight, hit->point, toEye, normal);
+
                 canvas.SetPixel(color, x, y);
             }
         }

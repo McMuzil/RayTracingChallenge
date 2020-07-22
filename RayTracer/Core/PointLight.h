@@ -12,10 +12,10 @@ public:
     }
 
     const Vec3D& GetPosition() const { return m_position; }
-    void GetPosition(const Vec3D& val) { m_position = val; }
+    void SetPosition(const Vec3D& val) { m_position = val; }
 
     const Vec3D& GetColor() const { return m_color; }
-    void GetColor(const Vec3D& val) { m_color = val; }
+    void SetColor(const Vec3D& val) { m_color = val; }
 
 private:
 

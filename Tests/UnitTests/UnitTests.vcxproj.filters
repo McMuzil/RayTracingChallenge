@@ -16,6 +16,7 @@
     <ClCompile Include="Core\SphereTest.cpp" />
     <ClCompile Include="Core\PointLightTest.cpp" />
     <ClCompile Include="Core\MaterialTest.cpp" />
+    <ClCompile Include="Core\LightingTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

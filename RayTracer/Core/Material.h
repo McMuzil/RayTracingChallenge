@@ -1,10 +1,15 @@
 #pragma once
-#include "Helpers.h"
 #include <sstream>
+
+#include "Helpers.h"
+#include "Vector.h"
 
 class Material
 {
 public:
+
+    const Vec3D& GetColor() const { return m_color; }
+    void SetColor(const Vec3D& val) { m_color = val; }
 
     float GetAmbient() const { return m_ambient; }
     void SetAmbient(float value) { m_ambient = value; }
@@ -28,6 +33,7 @@ public:
 
 private:
 
+    Vec3D m_color = Vec3D(1.f);
     float m_ambient = 0.1f;
     float m_diffuse = 0.9f;
     float m_specular = 0.9f;
