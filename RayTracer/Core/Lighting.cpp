@@ -1,6 +1,10 @@
 #include "Core/Lighting.h"
-#include "PointLight.h"
+
+#include "CollisionInfo.h"
 #include "Material.h"
+#include "PointLight.h"
+#include "Ray.h"
+#include "World.h"
 
 Vec3D Lighting::Calculate(const Material& material, const PointLight& light, const Vec3D& point, const Vec3D& toEye, const Vec3D& normal)
 {
@@ -27,4 +31,20 @@ Vec3D Lighting::Calculate(const Material& material, const PointLight& light, con
     }
 
     return ambient + diffuse + specular;
+}
+
+Vec3D Lighting::Calculate(const World& world, const Hit* hit)
+{
+    if (!hit)
+    {
+        return Vec3D(0.f);
+    }
+
+    return Calculate(hit->object->GetMaterial(), world.GetLight(), hit->point, hit->toEye, hit->normal);
+}
+
+Vec3D Lighting::Calculate(const World& world, const Ray& ray)
+{
+    CollisionInfo info = world.Intersect(ray);
+    return Calculate(world, info.GetFirstHit());
 }

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Collision.h" />
     <ClInclude Include="Core\CollisionInfo.h" />
     <ClInclude Include="Core\Constants.h" />
     <ClInclude Include="Core\Canvas.h" />
@@ -33,14 +32,15 @@
     <ClInclude Include="Core\Sphere.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Vector.h" />
+    <ClInclude Include="Core\World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Canvas.cpp" />
-    <ClCompile Include="Core\Collision.cpp" />
     <ClCompile Include="Core\Lighting.cpp" />
     <ClCompile Include="Core\Ray.cpp" />
     <ClCompile Include="Core\Sphere.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
+    <ClCompile Include="Core\World.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

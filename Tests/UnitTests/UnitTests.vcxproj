@@ -190,6 +190,7 @@
     <ClCompile Include="Core\RayTest.cpp" />
     <ClCompile Include="Core\SphereTest.cpp" />
     <ClCompile Include="Core\TransformTest.cpp" />
+    <ClCompile Include="Core\WorldTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

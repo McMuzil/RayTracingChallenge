@@ -4,28 +4,32 @@
 
 class Object;
 
+struct Hit
+{
+    const Object* object = nullptr;
+    Vec3D point;
+    Vec3D normal;
+    Vec3D toEye;
+    float distance = 0.f;
+    bool inside = false;
+
+    bool operator<(const Hit& other) const
+    {
+        return distance < other.distance;
+    }
+};
+
 struct CollisionInfo
 {
-    struct Hit
-    {
-        const Object* object;
-        Vec3D point;
-        float distance;
-    };
     std::vector<Hit> hits;
 
     const Hit* GetFirstHit() const
     {
-        const auto it = std::min_element(hits.cbegin(), hits.cend(), [](const Hit& hit1, const Hit& hit2)
+        const auto it = std::find_if(hits.cbegin(), hits.cend(), [](const Hit& hit)
         {
-            return hit1.distance < hit2.distance;
+            return hit.distance >= 0.f;
         });
 
-        if (it == hits.cend())
-        {
-            return nullptr;
-        }
-
-        return &(*it);
+        return it != hits.cend() ? &(*it) : nullptr;
     }
 };

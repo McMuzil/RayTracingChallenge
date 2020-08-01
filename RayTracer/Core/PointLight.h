@@ -5,6 +5,8 @@ class PointLight
 {
 public:
 
+    PointLight() = default;
+
     PointLight(const Vec3D& position, const Vec3D& color)
         : m_position(position)
         , m_color(color)
@@ -16,6 +18,12 @@ public:
 
     const Vec3D& GetColor() const { return m_color; }
     void SetColor(const Vec3D& val) { m_color = val; }
+
+    bool operator==(const PointLight& other) const
+    {
+        return m_position.IsEqualWithEpsilon(other.m_position) &&
+            m_color.IsEqualWithEpsilon(other.m_color);
+    }
 
 private:
 

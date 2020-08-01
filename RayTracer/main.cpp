@@ -9,13 +9,12 @@
 #include "Core/Sphere.h"
 #include "Core/Ray.h"
 #include "Core/CollisionInfo.h"
-#include "Core/Collision.h"
 #include "Core/PointLight.h"
 #include "Core/Lighting.h"
 
 int main()
 {
-    Canvas canvas(200, 200);
+    Canvas canvas(100, 100);
     PointLight pointLight(Vec3D(-10, 10, -10), Vec3D(1, 1, 1));
     Sphere sphere;
     Material material;
@@ -39,9 +38,9 @@ int main()
             Vec3D position(worldX, worldY, wallZ);
 
             Ray ray(rayOrigin, (position - rayOrigin).Normalize());
-            CollisionInfo info = Collision::Intersect(ray, sphere);
+            CollisionInfo info = sphere.Intersect(ray);
 
-            const CollisionInfo::Hit* hit = info.GetFirstHit();
+            const Hit* hit = info.GetFirstHit();
             if (hit)
             {
                 Vec3D normal = hit->object->NormalAt(hit->point);
