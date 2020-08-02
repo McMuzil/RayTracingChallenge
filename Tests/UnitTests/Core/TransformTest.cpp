@@ -5,6 +5,7 @@
 #include "Core/Vector.h"
 #include "Core/Canvas.h"
 #include "Core/Transform.h"
+#include "Core/Matrix.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -190,6 +191,57 @@ namespace Core
             point = transform * point;
 
             Assert::IsTrue(Vec4D::IsEqualWithEpsilon(Vec4D(15, 0, 7, 1), point));
+        }
+
+        TEST_METHOD(LookAtDefault)
+        {
+            Vec3D point(0, 0, 0);
+            Vec3D target(0, 0, -1);
+            Vec3D up(0, 1, 0);
+
+            Matrix<4, 4> transform = Transform::LookAt(point, target, up);
+
+            Assert::IsTrue(transform.IsEqualWithEpsilon(Matrix<4, 4>::Identity()), L"Must be an identity matrix.");
+        }
+
+        TEST_METHOD(LookAtPositiveZ)
+        {
+            Vec3D point(0, 0, 0);
+            Vec3D target(0, 0, 1);
+            Vec3D up(0, 1, 0);
+
+            Matrix<4, 4> transform = Transform::LookAt(point, target, up);
+
+            Assert::IsTrue(transform.IsEqualWithEpsilon(Transform::Scaling(-1, 1, -1)), L"Matrices are not equal.");
+        }
+
+        TEST_METHOD(LookAtMovesWorld)
+        {
+            Vec3D point(0, 0, 8);
+            Vec3D target(0, 0, 0);
+            Vec3D up(0, 1, 0);
+
+            Matrix<4, 4> transform = Transform::LookAt(point, target, up);
+
+            Assert::IsTrue(transform.IsEqualWithEpsilon(Transform::Translation(0, 0, -8)), L"Matrices are not equal.");
+        }
+
+        TEST_METHOD(LookAtArbitraryDirection)
+        {
+            Vec3D point(1, 3, 2);
+            Vec3D target(4, -2, 8);
+            Vec3D up(1, 1, 0);
+
+            Matrix<4, 4> transform = Transform::LookAt(point, target, up);
+
+            Matrix<4, 4> expected{
+                { -0.50709f, 0.50709f,  0.67612f, -2.36643f },
+                {  0.76772f, 0.60609f,  0.12122f, -2.82843f },
+                { -0.35857f, 0.59761f, -0.71714f,  0.00000f },
+                {  0.00000f, 0.00000f,  0.00000f,  1.00000f },
+            };
+
+            Assert::IsTrue(expected.IsEqualWithEpsilon(transform), L"Matrices are not equal.");
         }
     };
 }

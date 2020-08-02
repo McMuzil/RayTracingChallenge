@@ -17,7 +17,5 @@ public:
 
     static Matrix<4, 4> Shearing(float xy, float xz, float yx, float yz, float zx, float zy);
 
-private:
-
-
+    static Matrix<4, 4> LookAt(const Vec3D& from, const Vec3D& to, const Vec3D& up = Vec3D(0, 1, 0));
 };

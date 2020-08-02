@@ -59,3 +59,19 @@ Matrix<4, 4> Transform::Shearing(float xy, float xz, float yx, float yz, float z
         { 0,  0,  0,  1 }
     );
 }
+
+Matrix<4, 4> Transform::LookAt(const Vec3D& from, const Vec3D& to, const Vec3D& up /*= Vec3D(0, 1, 0)*/)
+{
+    const Vec3D forward = (to - from).Normalize();
+    const Vec3D left = forward.Cross(up.Normalize());
+    const Vec3D trueUp = left.Cross(forward);
+
+    Matrix<4, 4> orientation{
+        {   left.x,      left.y,    left.z,   0 },
+        {  trueUp.x,    trueUp.y,  trueUp.z,  0 },
+        { -forward.x, -forward.y, -forward.z, 0 },
+        {     0,           0,         0,      1 },
+    };
+
+    return orientation * Transform::Translation(-from.x, -from.y, -from.z);
+}
