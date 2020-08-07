@@ -72,6 +72,12 @@ public:
         Init(vec);
     }
 
+    Vector(const Vector<T, N - 1>& vec, T value)
+    {
+        Init(vec);
+        m_data.back() = value;
+    }
+
     template <class T, size_t N>
     void Init(const Vector<T, N>& vec)
     {
@@ -287,6 +293,13 @@ public:
         return m_data.data();
     }
 
+    template <class A = T, size_t B = N, typename std::enable_if<!std::is_signed<A>::value, A>::type* = nullptr>
+    Vector Abs() const
+    {
+        return *this;
+    }
+
+    template <class A = T, size_t B = N, typename std::enable_if<std::is_signed<A>::value, A>::type* = nullptr>
     Vector Abs() const
     {
         std::array<T, N> vec;

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\CollisionInfo.h" />
     <ClInclude Include="Core\Constants.h" />
     <ClInclude Include="Core\Canvas.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Core\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\Canvas.cpp" />
     <ClCompile Include="Core\Lighting.cpp" />
     <ClCompile Include="Core\Ray.cpp" />

@@ -13,6 +13,16 @@ namespace Helpers
         return abs(first - second) < epsilon;
     }
 
+    inline float ToRad(float degree)
+    {
+        return degree * Constants::Pi / 180.f;
+    }
+
+    inline float ToDegree(float rad)
+    {
+        return rad * 180.f / Constants::Pi;
+    }
+
     template<typename T>
     typename std::vector<T>::iterator InsertSorted(std::vector<T>& vec, T const& item)
     {

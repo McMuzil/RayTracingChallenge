@@ -77,7 +77,7 @@ std::string Canvas::GetPPMContent() const
     {
         for (size_t x = 0; x < m_size.x; x++)
         {
-            const Vec4D rgba = m_pixels[y][x] * 255.f;
+            const Vec4D rgba = m_pixels[y][x] * MaxPPMColorNumber;
             const Vec4Di rgbaUnsigned(
                 int(round(rgba.r)), 
                 int(round(rgba.g)),
