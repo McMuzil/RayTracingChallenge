@@ -7,6 +7,8 @@
 #include "Core/Object.h"
 #include "Core/PointLight.h"
 #include "Core/Ray.h"
+#include "Core/Sphere.h"
+#include "Core/Transform.h"
 #include "Core/Vector.h"
 #include "Core/World.h"
 
@@ -30,6 +32,18 @@ namespace Core
             Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal);
 
             Assert::IsTrue(Vec3D(1.9f, 1.9f, 1.9f).IsEqualWithEpsilon(result));
+        }
+
+        TEST_METHOD(EyeBetweenLightAndSurfaceInShadow)
+        {
+            Vec3D toEye(0, 0, -1);
+            Vec3D normal(0, 0, -1);
+            PointLight pointLight(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
+            bool inShadow = true;
+
+            Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal, inShadow);
+
+            Assert::IsTrue(Vec3D(0.1f, 0.1f, 0.1f).IsEqualWithEpsilon(result));
         }
 
         TEST_METHOD(EyeBetweenLightAndSurfaceAndEyeOffset45)
@@ -144,6 +158,73 @@ namespace Core
             Vec3D color = Lighting::Calculate(w, r);
 
             Assert::IsTrue(inner->GetMaterial().GetColor().IsEqualWithEpsilon(color), L"The color should be equal to inners sphere.");
+        }
+
+        TEST_METHOD(ColorWithShadow)
+        {
+            World world;
+            auto& objects = world.GetObjects();
+
+            world.SetLight(PointLight(Vec3D(0, 0, -10), Vec3D(1, 1, 1)));
+
+            objects.emplace_back(std::make_unique<Sphere>());
+
+            auto sphere = std::make_unique<Sphere>();
+            sphere->SetTransform(Transform::Translation(0, 0, 10));
+            objects.emplace_back(std::move(sphere));
+
+            Ray ray(Vec3D(0, 0, 5), Vec3D(0, 0, 1));
+
+            Vec3D color = Lighting::Calculate(world, ray);
+
+            Assert::IsTrue(Vec3D(0.1f, 0.1f, 0.1f).IsEqualWithEpsilon(color));
+        }
+
+        TEST_METHOD(ShadowBias)
+        {
+            Ray ray(Vec3D(0, 0, -5), Vec3D(0, 0, 1));
+            Sphere sphere;
+            sphere.SetTransform(Transform::Translation(0, 0, 1));
+            
+            CollisionInfo info = sphere.Intersect(ray);
+            const Hit* hit = info.GetFirstHit();
+
+            Assert::IsNotNull(hit);
+            Assert::AreEqual(5.f, hit->distance);
+            Assert::IsTrue(hit->biasedPoint.z < -Constants::ShadowBias / 2.f);
+            Assert::IsTrue(hit->biasedPoint.z < hit->point.z);
+        }
+
+        TEST_METHOD(ShadowWhenPointNotCollinearWithObjectAndLight)
+        {
+            World world = World::CreateDefault();
+            Vec3D point(0, 10, 0);
+
+            Assert::IsFalse(Lighting::IsInShadow(world, point), L"The point must not be in shadow.");
+        }
+
+        TEST_METHOD(ShadowWhenObjectBetweenPointAndLight)
+        {
+            World world = World::CreateDefault();
+            Vec3D point(10, -10, 10);
+
+            Assert::IsTrue(Lighting::IsInShadow(world, point), L"The point must be in shadow.");
+        }
+
+        TEST_METHOD(ShadowWhenObjectBehindLight)
+        {
+            World world = World::CreateDefault();
+            Vec3D point(-20, 20, -20);
+
+            Assert::IsFalse(Lighting::IsInShadow(world, point), L"The point must not be in shadow.");
+        }
+
+        TEST_METHOD(ShadowWhenObjectBehindPoint)
+        {
+            World world = World::CreateDefault();
+            Vec3D point(-2, 2, -2);
+
+            Assert::IsFalse(Lighting::IsInShadow(world, point), L"The point must not be in shadow.");
         }
     };
 }

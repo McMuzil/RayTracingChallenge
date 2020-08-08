@@ -180,6 +180,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\CameraTest.cpp" />
     <ClCompile Include="Core\CanvasTest.cpp" />
     <ClCompile Include="Core\CollisionTest.cpp" />
     <ClCompile Include="Core\HelpersTest.cpp" />

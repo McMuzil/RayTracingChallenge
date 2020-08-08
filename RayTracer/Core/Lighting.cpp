@@ -6,7 +6,14 @@
 #include "Ray.h"
 #include "World.h"
 
-Vec3D Lighting::Calculate(const Material& material, const PointLight& light, const Vec3D& point, const Vec3D& toEye, const Vec3D& normal)
+Vec3D Lighting::Calculate(
+    const Material& material, 
+    const PointLight& light, 
+    const Vec3D& point, 
+    const Vec3D& toEye, 
+    const Vec3D& normal, 
+    bool inShadow /* bool inShadow = false */
+)
 {
     Vec3D effectiveColor = material.GetColor() * light.GetColor();
     Vec3D toLight = (light.GetPosition() - point).Normalize();
@@ -30,7 +37,14 @@ Vec3D Lighting::Calculate(const Material& material, const PointLight& light, con
         }
     }
 
-    return ambient + diffuse + specular;
+    if (inShadow)
+    {
+        return ambient;
+    }
+    else
+    {
+        return ambient + diffuse + specular;
+    }
 }
 
 Vec3D Lighting::Calculate(const World& world, const Hit* hit)
@@ -40,11 +54,26 @@ Vec3D Lighting::Calculate(const World& world, const Hit* hit)
         return Vec3D(0.f);
     }
 
-    return Calculate(hit->object->GetMaterial(), world.GetLight(), hit->point, hit->toEye, hit->normal);
+    const bool inShadow = Lighting::IsInShadow(world, hit->biasedPoint);
+
+    return Calculate(hit->object->GetMaterial(), world.GetLight(), hit->point, hit->toEye, hit->normal, inShadow);
 }
 
 Vec3D Lighting::Calculate(const World& world, const Ray& ray)
 {
     CollisionInfo info = world.Intersect(ray);
     return Calculate(world, info.GetFirstHit());
+}
+
+bool Lighting::IsInShadow(const World& world, const Vec3D& point)
+{
+    const Vec3D toPointLight = world.GetLight().GetPosition() - point;
+    const Vec3D toPointLightDir = toPointLight.Normalize();
+    const float distance = toPointLight.Length();
+
+    const Ray ray(point, toPointLightDir);
+    const CollisionInfo info = world.Intersect(ray);
+    const Hit* hit = info.GetFirstHit();
+
+    return (hit && hit->distance < distance);
 }

@@ -83,7 +83,7 @@ int main()
     PointLight pointLight(Vec3D(-10, 10, -10), Vec3D(1, 1, 1));
     world.SetLight(pointLight);
 
-    Camera camera(Vec2Du(1920, 1080), 75);
+    Camera camera(Vec2Du(720, 480), 75);
     camera.SetTransform(Transform::LookAt(Vec3D(0, 1.5f, -5), Vec3D(0, 1, 0)));
 
     Canvas canvas = camera.Render(world);

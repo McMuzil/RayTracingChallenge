@@ -34,7 +34,7 @@ CollisionInfo Sphere::Intersect(const Ray& ray) const
 
         Hit& hit = collisionInfo.hits.emplace_back();
         hit.distance = -b / (2.f * a);
-        hit.point = rayInv.GetPointAtDistance(hit.distance);
+        hit.point = ray.GetPointAtDistance(hit.distance);
         FillIntersectionInfo(hit, this, ray);
 
         return collisionInfo;
@@ -45,12 +45,12 @@ CollisionInfo Sphere::Intersect(const Ray& ray) const
 
         Hit& hit1 = collisionInfo.hits.emplace_back();
         hit1.distance = (-b - sqrt(discriminant)) / (2.f * a);
-        hit1.point = rayInv.GetPointAtDistance(hit1.distance);
+        hit1.point = ray.GetPointAtDistance(hit1.distance);
         FillIntersectionInfo(hit1, this, ray);
 
         Hit& hit2 = collisionInfo.hits.emplace_back();
         hit2.distance = (-b + sqrt(discriminant)) / (2.f * a);
-        hit2.point = rayInv.GetPointAtDistance(hit2.distance);
+        hit2.point = ray.GetPointAtDistance(hit2.distance);
         FillIntersectionInfo(hit2, this, ray);
 
         return collisionInfo;
@@ -67,4 +67,5 @@ void Sphere::FillIntersectionInfo(Hit& hit, const Object* obj, const Ray& ray) c
         hit.inside = true;
         hit.normal = -hit.normal;
     }
+    hit.biasedPoint = hit.point + hit.normal * Constants::ShadowBias;
 }

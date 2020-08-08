@@ -8,6 +8,7 @@ struct Hit
 {
     const Object* object = nullptr;
     Vec3D point;
+    Vec3D biasedPoint;
     Vec3D normal;
     Vec3D toEye;
     float distance = 0.f;
