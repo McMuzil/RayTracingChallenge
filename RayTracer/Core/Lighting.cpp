@@ -5,9 +5,10 @@
 #include "PointLight.h"
 #include "Ray.h"
 #include "World.h"
+#include "Pattern/Pattern.h"
 
 Vec3D Lighting::Calculate(
-    const Material& material, 
+    const Object& object, 
     const PointLight& light, 
     const Vec3D& point, 
     const Vec3D& toEye, 
@@ -15,7 +16,11 @@ Vec3D Lighting::Calculate(
     bool inShadow /* bool inShadow = false */
 )
 {
-    Vec3D effectiveColor = material.GetColor() * light.GetColor();
+    const Material& material = object.GetMaterial();
+    const Pattern* pattern = material.GetPattern();
+    const Vec3D materialColor = object.GetColorAt(point);
+
+    Vec3D effectiveColor = materialColor * light.GetColor();
     Vec3D toLight = (light.GetPosition() - point).Normalize();
     Vec3D ambient = effectiveColor * material.GetAmbient();
 
@@ -53,10 +58,11 @@ Vec3D Lighting::Calculate(const World& world, const Hit* hit)
     {
         return Vec3D(0.f);
     }
+    assert(hit->object);
 
     const bool inShadow = Lighting::IsInShadow(world, hit->biasedPoint);
 
-    return Calculate(hit->object->GetMaterial(), world.GetLight(), hit->point, hit->toEye, hit->normal, inShadow);
+    return Calculate(*hit->object, world.GetLight(), hit->point, hit->toEye, hit->normal, inShadow);
 }
 
 Vec3D Lighting::Calculate(const World& world, const Ray& ray)

@@ -4,9 +4,15 @@
 #include "Helpers.h"
 #include "Vector.h"
 
+class Pattern;
+
 class Material
 {
 public:
+
+    Material();
+    Material(const Material& other);
+    ~Material();
 
     const Vec3D& GetColor() const { return m_color; }
     void SetColor(const Vec3D& val) { m_color = val; }
@@ -23,6 +29,11 @@ public:
     float GetShininess() const { return m_shininess; }
     void SetShininess(float value) { m_shininess = value; }
 
+    Pattern* GetPattern() const { return m_pattern.get(); }
+    void SetPattern(std::unique_ptr<Pattern>&& val);
+
+    Material& operator=(const Material& other);
+
     bool operator==(const Material& other) const
     {
         return Helpers::IsEqualWithEpsilon(m_ambient, other.m_ambient) &&
@@ -33,6 +44,7 @@ public:
 
 private:
 
+    std::unique_ptr<Pattern> m_pattern = nullptr;
     Vec3D m_color = Vec3D(1.f);
     float m_ambient = 0.1f;
     float m_diffuse = 0.9f;

@@ -1,17 +1,7 @@
-#include "Core/Sphere.h"
+#include "Core/Objects/Sphere.h"
 
 #include "Core/Ray.h"
 #include "Core/CollisionInfo.h"
-
-Vec3D Sphere::NormalAt(const Vec3D& point) const
-{
-    const Matrix<4, 4> inverseTrans = GetTransform().Inverse();
-    const Vec3D pointObjSpace = inverseTrans * point.AsPoint();
-    const Vec3D normalObjSpace = pointObjSpace - Vec3D(0.f); // We assume that the sphere is always at (0.0.0) position
-    const Vec3D normalWorldSpace = inverseTrans.Transpose() * normalObjSpace.AsPoint();
-
-    return normalWorldSpace.Normalize();
-}
 
 CollisionInfo Sphere::Intersect(const Ray& ray) const
 {
@@ -57,15 +47,7 @@ CollisionInfo Sphere::Intersect(const Ray& ray) const
     }
 }
 
-void Sphere::FillIntersectionInfo(Hit& hit, const Object* obj, const Ray& ray) const
+Vec3D Sphere::LocalNormalAt(const Vec3D& localPoint) const
 {
-    hit.object = this;
-    hit.toEye = -ray.GetDirection();
-    hit.normal = NormalAt(hit.point);
-    if (hit.toEye.Dot(hit.normal) < 0.f)
-    {
-        hit.inside = true;
-        hit.normal = -hit.normal;
-    }
-    hit.biasedPoint = hit.point + hit.normal * Constants::ShadowBias;
+    return localPoint;
 }

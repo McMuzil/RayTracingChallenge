@@ -9,43 +9,45 @@
 #include "Core/Lighting.h"
 #include "Core/Material.h"
 #include "Core/Matrix.h"
+#include "Core/Objects/Plane.h"
+#include "Core/Objects/Sphere.h"
+#include "Core/Pattern/StripePattern.h"
 #include "Core/PointLight.h"
 #include "Core/Ray.h"
-#include "Core/Sphere.h"
 #include "Core/Transform.h"
 #include "Core/Vector.h"
 #include "Core/World.h"
+#include "Core/Pattern/CheckerPattern.h"
 
 int main()
 {
     World world;
     std::vector<std::unique_ptr<Object>>& objects = world.GetObjects();
+    std::unique_ptr<Pattern> pattern = std::make_unique<CheckerPattern>(Vec3D(1.f, 0, 1.f), Vec3D(0.f, 0, 0));
 
-    Sphere floor;
-    floor.SetTransform(Transform::Scaling(10, 0.01f, 10));
+    Plane floor;
     Material floorMat = floor.GetMaterial();
     floorMat.SetColor(Vec3D(1, 0.9f, 0.9f));
     floorMat.SetSpecular(0.f);
+    floorMat.SetPattern(std::move(pattern));
     floor.SetMaterial(floorMat);
-    objects.push_back(std::make_unique<Sphere>(floor));
+    objects.push_back(std::make_unique<Plane>(floor));
 
-    Sphere leftWall;
+    Plane leftWall;
     leftWall.SetTransform(
         Transform::Translation(0, 0, 5) *
-        Transform::RotationY(-Constants::Pi / 4.f) * Transform::RotationX(Constants::Pi / 2.f) *
-        Transform::Scaling(10, 0.01f, 10)
+        Transform::RotationY(-Constants::Pi / 4.f) * Transform::RotationX(Constants::Pi / 2.f)
     );
     leftWall.SetMaterial(floorMat);
-    objects.push_back(std::make_unique<Sphere>(leftWall));
+    objects.push_back(std::make_unique<Plane>(leftWall));
 
-    Sphere rightWall;
+    Plane rightWall;
     rightWall.SetTransform(
         Transform::Translation(0, 0, 5) *
-        Transform::RotationY(Constants::Pi / 4.f) * Transform::RotationX(Constants::Pi / 2.f) *
-        Transform::Scaling(10, 0.01f, 10)
+        Transform::RotationY(Constants::Pi / 4.f) * Transform::RotationX(Constants::Pi / 2.f)
     );
     rightWall.SetMaterial(floorMat);
-    objects.push_back(std::make_unique<Sphere>(rightWall));
+    objects.push_back(std::make_unique<Plane>(rightWall));
 
     Sphere middle;
     middle.SetTransform(Transform::Translation(-0.5f, 1, 0.5f));
@@ -83,7 +85,7 @@ int main()
     PointLight pointLight(Vec3D(-10, 10, -10), Vec3D(1, 1, 1));
     world.SetLight(pointLight);
 
-    Camera camera(Vec2Du(720, 480), 75);
+    Camera camera(Vec2Du(360, 240), 75);
     camera.SetTransform(Transform::LookAt(Vec3D(0, 1.5f, -5), Vec3D(0, 1, 0)));
 
     Canvas canvas = camera.Render(world);

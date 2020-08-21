@@ -2,6 +2,7 @@
 #include "Vector.h"
 
 class Material;
+class Object;
 class PointLight;
 class Ray;
 class World;
@@ -12,7 +13,7 @@ class Lighting
 public:
 
     static Vec3D Calculate(
-        const Material& material,
+        const Object& object,
         const PointLight& light,
         const Vec3D& point,
         const Vec3D& toEye,

@@ -1,0 +1,28 @@
+#include "Plane.h"
+
+#include "Core/CollisionInfo.h"
+#include "Core/Ray.h"
+
+CollisionInfo Plane::Intersect(const Ray& ray) const
+{
+    const Ray localRay = ray.Transform(GetTransform().Inverse());
+
+    if (abs(localRay.GetDirection().y) < Constants::Epsilon)
+    {
+        return CollisionInfo();
+    }
+
+    CollisionInfo collisionInfo;
+
+    Hit& hit1 = collisionInfo.hits.emplace_back();
+    hit1.distance = -localRay.GetOrigin().y / localRay.GetDirection().y;
+    hit1.point = ray.GetPointAtDistance(hit1.distance);
+    FillIntersectionInfo(hit1, this, ray);
+
+    return collisionInfo;
+}
+
+Vec3D Plane::LocalNormalAt(const Vec3D& point) const
+{
+    return Vec3D(0, 1, 0);
+}

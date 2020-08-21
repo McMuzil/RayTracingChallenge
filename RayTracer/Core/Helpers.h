@@ -1,8 +1,9 @@
 #pragma once
+#include <algorithm>
+#include <assert.h>
 #include <cstdlib>
 #include <limits>
 #include <vector>
-#include <algorithm>
 
 #include "Core/Constants.h"
 
@@ -31,5 +32,23 @@ namespace Helpers
             std::upper_bound(vec.begin(), vec.end(), item),
             item
         );
+    }
+
+    template<typename A, typename B>
+    std::unique_ptr<A> StaticCastPtr(std::unique_ptr<B>& base)
+    {
+        B* p = base.release();
+        assert(dynamic_cast<A*>(p));
+
+        return std::unique_ptr<A>(static_cast<A*>(p));
+    }
+
+    template<typename A, typename B>
+    std::unique_ptr<A> StaticCastPtr(std::unique_ptr<B>&& base)
+    {
+        B* p = base.release();
+        assert(dynamic_cast<A*>(p));
+
+        return std::unique_ptr<A>(static_cast<A*>(p));
     }
 };
