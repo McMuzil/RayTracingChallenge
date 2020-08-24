@@ -13,12 +13,14 @@
     <ClCompile Include="Core\TransformTest.cpp" />
     <ClCompile Include="Core\RayTest.cpp" />
     <ClCompile Include="Core\CollisionTest.cpp" />
-    <ClCompile Include="Core\SphereTest.cpp" />
     <ClCompile Include="Core\PointLightTest.cpp" />
     <ClCompile Include="Core\MaterialTest.cpp" />
     <ClCompile Include="Core\LightingTest.cpp" />
     <ClCompile Include="Core\WorldTest.cpp" />
     <ClCompile Include="Core\CameraTest.cpp" />
+    <ClCompile Include="Core\PatternTest.cpp" />
+    <ClCompile Include="Core\PlaneTest.cpp" />
+    <ClCompile Include="Core\ObjectTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

@@ -3,7 +3,7 @@
 
 #include "Core/CollisionInfo.h"
 #include "Core/Ray.h"
-#include "Core/Sphere.h"
+#include "Core/Objects/Sphere.h"
 #include "Core/Transform.h"
 #include <Core/Helpers.h>
 #include <Core/Vector.h>

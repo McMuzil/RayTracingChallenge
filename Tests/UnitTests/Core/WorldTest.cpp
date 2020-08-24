@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 #include "Core/Material.h"
 #include "Core/PointLight.h"
-#include "Core/Sphere.h"
+#include "Core/Objects/Sphere.h"
 #include "Core/Transform.h"
 #include "Core/World.h"
 #include "Core/Ray.h"

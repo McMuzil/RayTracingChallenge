@@ -4,13 +4,14 @@
 #include "Core/CollisionInfo.h"
 #include "Core/Lighting.h"
 #include "Core/Material.h"
-#include "Core/Object.h"
+#include "Core/Objects/Object.h"
 #include "Core/PointLight.h"
 #include "Core/Ray.h"
-#include "Core/Sphere.h"
+#include "Core/Objects/Sphere.h"
 #include "Core/Transform.h"
 #include "Core/Vector.h"
 #include "Core/World.h"
+#include "Core/Pattern/StripePattern.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -20,7 +21,7 @@ namespace Core
     {
     public:
 
-        const Material DefaultMaterial;
+        Sphere DefaultObject;
         const Vec3D Position;
 
         TEST_METHOD(EyeBetweenLightAndSurface)
@@ -29,7 +30,7 @@ namespace Core
             Vec3D normal(0, 0, -1);
             PointLight pointLight(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
 
-            Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal);
+            Vec3D result = Lighting::Calculate(DefaultObject, pointLight, Position, toEye, normal);
 
             Assert::IsTrue(Vec3D(1.9f, 1.9f, 1.9f).IsEqualWithEpsilon(result));
         }
@@ -41,7 +42,7 @@ namespace Core
             PointLight pointLight(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
             bool inShadow = true;
 
-            Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal, inShadow);
+            Vec3D result = Lighting::Calculate(DefaultObject, pointLight, Position, toEye, normal, inShadow);
 
             Assert::IsTrue(Vec3D(0.1f, 0.1f, 0.1f).IsEqualWithEpsilon(result));
         }
@@ -53,7 +54,7 @@ namespace Core
             Vec3D normal(0, 0, -1);
             PointLight pointLight(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
 
-            Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal);
+            Vec3D result = Lighting::Calculate(DefaultObject, pointLight, Position, toEye, normal);
 
             Assert::IsTrue(Vec3D(1.f, 1.f, 1.f).IsEqualWithEpsilon(result));
         }
@@ -64,7 +65,7 @@ namespace Core
             Vec3D normal(0, 0, -1);
             PointLight pointLight(Vec3D(0, 10, -10), Vec3D(1, 1, 1));
 
-            Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal);
+            Vec3D result = Lighting::Calculate(DefaultObject, pointLight, Position, toEye, normal);
 
             Assert::IsTrue(Vec3D(0.7364f, 0.7364f, 0.7364f).IsEqualWithEpsilon(result));
         }
@@ -76,7 +77,7 @@ namespace Core
             Vec3D normal(0, 0, -1);
             PointLight pointLight(Vec3D(0, 10, -10), Vec3D(1, 1, 1));
 
-            Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal);
+            Vec3D result = Lighting::Calculate(DefaultObject, pointLight, Position, toEye, normal);
 
             Assert::IsTrue(Vec3D(1.63638f, 1.63638f, 1.63638f).IsEqualWithEpsilon(result));
         }
@@ -87,7 +88,7 @@ namespace Core
             Vec3D normal(0, 0, -1);
             PointLight pointLight(Vec3D(0, 0, 10), Vec3D(1, 1, 1));
 
-            Vec3D result = Lighting::Calculate(DefaultMaterial, pointLight, Position, toEye, normal);
+            Vec3D result = Lighting::Calculate(DefaultObject, pointLight, Position, toEye, normal);
 
             Assert::IsTrue(Vec3D(0.1f, 0.1f, 0.1f).IsEqualWithEpsilon(result));
         }
@@ -178,6 +179,82 @@ namespace Core
             Vec3D color = Lighting::Calculate(world, ray);
 
             Assert::IsTrue(Vec3D(0.1f, 0.1f, 0.1f).IsEqualWithEpsilon(color));
+        }
+
+        TEST_METHOD(ColorWithPattern)
+        {
+            Material material = DefaultObject.GetMaterial();
+            material.SetPattern(std::make_unique<StripePattern>(Vec3D(1.f), Vec3D(0.f)));
+            material.SetAmbient(1.f);
+            material.SetDiffuse(0.f);
+            material.SetSpecular(0.f);
+            DefaultObject.SetMaterial(material);
+            const Vec3D toEye(0, 0, -1);
+            const Vec3D normal(0, 0, -1);
+            const PointLight light(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
+
+            const Vec3D color1 = Lighting::Calculate(DefaultObject, light, Vec3D(0.9f, 0, 0), toEye, normal);
+            Assert::IsTrue(color1.IsEqualWithEpsilon(Vec3D(1, 1, 1)));
+            const Vec3D color2 = Lighting::Calculate(DefaultObject, light, Vec3D(1.1f, 0, 0), toEye, normal);
+            Assert::IsTrue(color2.IsEqualWithEpsilon(Vec3D(0, 0, 0)));
+        }
+
+        TEST_METHOD(ColorWithPatternAppliedAndObjectTransformation)
+        {
+            DefaultObject.SetTransform(Transform::Scaling(2.f, 1.f, 1.f));
+
+            Material material = DefaultObject.GetMaterial();
+            material.SetPattern(std::make_unique<StripePattern>(Vec3D(1.f), Vec3D(0.f)));
+            material.SetAmbient(1.f);
+            material.SetDiffuse(0.f);
+            material.SetSpecular(0.f);
+            DefaultObject.SetMaterial(material);
+            const Vec3D toEye(0, 0, -1);
+            const Vec3D normal(0, 0, -1);
+            const PointLight light(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
+
+            const Vec3D color1 = Lighting::Calculate(DefaultObject, light, Vec3D(1.5f, 0, 0), toEye, normal);
+            Assert::IsTrue(color1.IsEqualWithEpsilon(Vec3D(1, 1, 1)));
+        }
+
+        TEST_METHOD(ColorWithPatternTransformation)
+        {
+            auto pattern = std::make_unique<StripePattern>(Vec3D(1.f), Vec3D(0.f));
+            pattern->SetTransform(Transform::Scaling(2.f, 1.f, 1.f));
+
+            Material material = DefaultObject.GetMaterial();
+            material.SetPattern(std::move(pattern));
+            material.SetAmbient(1.f);
+            material.SetDiffuse(0.f);
+            material.SetSpecular(0.f);
+            DefaultObject.SetMaterial(material);
+            const Vec3D toEye(0, 0, -1);
+            const Vec3D normal(0, 0, -1);
+            const PointLight light(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
+
+            const Vec3D color1 = Lighting::Calculate(DefaultObject, light, Vec3D(1.5f, 0, 0), toEye, normal);
+            Assert::IsTrue(color1.IsEqualWithEpsilon(Vec3D(1, 1, 1)));
+        }
+
+        TEST_METHOD(ColorWithPatternAndObjectTransformations)
+        {
+            DefaultObject.SetTransform(Transform::Scaling(2.f, 2.f, 2.f));
+
+            auto pattern = std::make_unique<StripePattern>(Vec3D(1.f), Vec3D(0.f));
+            pattern->SetTransform(Transform::Translation(0.5f, 0.0f, 0.0f));
+
+            Material material = DefaultObject.GetMaterial();
+            material.SetPattern(std::move(pattern));
+            material.SetAmbient(1.f);
+            material.SetDiffuse(0.f);
+            material.SetSpecular(0.f);
+            DefaultObject.SetMaterial(material);
+            const Vec3D toEye(0, 0, -1);
+            const Vec3D normal(0, 0, -1);
+            const PointLight light(Vec3D(0, 0, -10), Vec3D(1, 1, 1));
+
+            const Vec3D color1 = Lighting::Calculate(DefaultObject, light, Vec3D(2.5f, 0, 0), toEye, normal);
+            Assert::IsTrue(color1.IsEqualWithEpsilon(Vec3D(1, 1, 1)));
         }
 
         TEST_METHOD(ShadowBias)

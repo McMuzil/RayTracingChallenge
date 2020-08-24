@@ -187,9 +187,11 @@
     <ClCompile Include="Core\LightingTest.cpp" />
     <ClCompile Include="Core\MaterialTest.cpp" />
     <ClCompile Include="Core\MatrixTest.cpp" />
+    <ClCompile Include="Core\PatternTest.cpp" />
+    <ClCompile Include="Core\PlaneTest.cpp" />
     <ClCompile Include="Core\PointLightTest.cpp" />
     <ClCompile Include="Core\RayTest.cpp" />
-    <ClCompile Include="Core\SphereTest.cpp" />
+    <ClCompile Include="Core\ObjectTest.cpp" />
     <ClCompile Include="Core\TransformTest.cpp" />
     <ClCompile Include="Core\WorldTest.cpp" />
     <ClCompile Include="pch.cpp">
