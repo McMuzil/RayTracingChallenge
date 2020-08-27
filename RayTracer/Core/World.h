@@ -17,8 +17,9 @@ public:
     bool Contains(const Object& object) const;
     bool Contains(const Object* object) const;
 
-    std::vector<std::unique_ptr<Object>>& GetObjects() { return m_objects; }
-    const std::vector<std::unique_ptr<Object>>& GetObjects() const { return m_objects; }
+    using ObjectsVector = std::vector<std::unique_ptr<Object>>;
+    ObjectsVector& GetObjects() { return m_objects; }
+    const ObjectsVector& GetObjects() const { return m_objects; }
 
     CollisionInfo Intersect(const Ray& ray) const;
 

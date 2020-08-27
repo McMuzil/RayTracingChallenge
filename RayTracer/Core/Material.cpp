@@ -27,6 +27,7 @@ Material& Material::operator=(const Material& other)
     this->SetDiffuse(other.GetDiffuse());
     this->SetSpecular(other.GetSpecular());
     this->SetShininess(other.GetShininess());
+    this->SetReflectivity(other.GetReflectivity());
     if (other.GetPattern())
     {
         this->SetPattern(Clone(other.GetPattern()));

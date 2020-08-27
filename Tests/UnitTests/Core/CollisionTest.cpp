@@ -117,6 +117,7 @@ namespace Core
             Assert::IsTrue(hit->point.IsEqualWithEpsilon(Vec3D(0, 0, -1)));
             Assert::IsTrue(hit->toEye.IsEqualWithEpsilon(Vec3D(0, 0, -1)));
             Assert::IsTrue(hit->normal.IsEqualWithEpsilon(Vec3D(0, 0, -1)));
+            Assert::IsTrue(hit->reflectedDir.IsEqualWithEpsilon(Vec3D(0, 0, -1)));
         }
 
         TEST_METHOD(IntersectionHitOutside)

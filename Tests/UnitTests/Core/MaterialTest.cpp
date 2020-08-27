@@ -19,6 +19,7 @@ namespace Core
             Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetDiffuse(), 0.9f));
             Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetSpecular(), 0.9f));
             Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetShininess(), 200.f));
+            Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetReflectivity(), 0.f));
         }
     };
 }

@@ -11,6 +11,7 @@ struct Hit
     Vec3D biasedPoint;
     Vec3D normal;
     Vec3D toEye;
+    Vec3D reflectedDir;
     float distance = 0.f;
     bool inside = false;
 

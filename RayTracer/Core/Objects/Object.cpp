@@ -41,8 +41,9 @@ Vec3D Object::GetColorAt(const Vec3D& point) const
     return materialColor;
 }
 
-void Object::FillIntersectionInfo(Hit& hit, const Object* obj, const Ray& ray) const
+void Object::FillIntersectionInfo(Hit& hit, const Ray& ray) const
 {
+    hit.point = ray.GetPointAtDistance(hit.distance);
     hit.object = this;
     hit.toEye = -ray.GetDirection();
     hit.normal = NormalAt(hit.point);
@@ -52,4 +53,5 @@ void Object::FillIntersectionInfo(Hit& hit, const Object* obj, const Ray& ray) c
         hit.normal = -hit.normal;
     }
     hit.biasedPoint = hit.point + hit.normal * Constants::ShadowBias;
+    hit.reflectedDir = Vec3D::Reflect(ray.GetDirection(), hit.normal);
 }

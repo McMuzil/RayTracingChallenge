@@ -16,8 +16,7 @@ CollisionInfo Plane::Intersect(const Ray& ray) const
 
     Hit& hit1 = collisionInfo.hits.emplace_back();
     hit1.distance = -localRay.GetOrigin().y / localRay.GetDirection().y;
-    hit1.point = ray.GetPointAtDistance(hit1.distance);
-    FillIntersectionInfo(hit1, this, ray);
+    FillIntersectionInfo(hit1, ray);
 
     return collisionInfo;
 }

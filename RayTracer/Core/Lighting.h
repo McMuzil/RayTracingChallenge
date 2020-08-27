@@ -1,4 +1,5 @@
 #pragma once
+#include "Constants.h"
 #include "Vector.h"
 
 class Material;
@@ -21,8 +22,10 @@ public:
         bool inShadow = false
     );
 
-    static Vec3D Calculate(const World& world, const Hit* hit);
-    static Vec3D Calculate(const World& world, const Ray& ray);
+    static Vec3D CalculateReflectedColor(const World& world, const Hit* hit, size_t bouncesLeft = Constants::BouncesCount);
+
+    static Vec3D Calculate(const World& world, const Hit* hit, size_t bouncesLeft = Constants::BouncesCount);
+    static Vec3D Calculate(const World& world, const Ray& ray, size_t bouncesLeft = Constants::BouncesCount);
 
     // TODO: we may want to calculate the float instead of bool
     static bool IsInShadow(const World& world, const Vec3D& point);

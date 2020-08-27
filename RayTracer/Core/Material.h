@@ -29,6 +29,9 @@ public:
     float GetShininess() const { return m_shininess; }
     void SetShininess(float value) { m_shininess = value; }
 
+    float GetReflectivity() const { return m_reflectivity; }
+    void SetReflectivity(float val) { m_reflectivity = val; }
+
     Pattern* GetPattern() const { return m_pattern.get(); }
     void SetPattern(std::unique_ptr<Pattern>&& val);
 
@@ -39,7 +42,8 @@ public:
         return Helpers::IsEqualWithEpsilon(m_ambient, other.m_ambient) &&
             Helpers::IsEqualWithEpsilon(m_diffuse, other.m_diffuse) &&
             Helpers::IsEqualWithEpsilon(m_specular, other.m_specular) &&
-            Helpers::IsEqualWithEpsilon(m_shininess, other.m_shininess);
+            Helpers::IsEqualWithEpsilon(m_shininess, other.m_shininess) &&
+            Helpers::IsEqualWithEpsilon(m_reflectivity, other.m_reflectivity);
     }
 
 private:
@@ -50,4 +54,5 @@ private:
     float m_diffuse = 0.9f;
     float m_specular = 0.9f;
     float m_shininess = 200.f;
+    float m_reflectivity = 0.f;
 };

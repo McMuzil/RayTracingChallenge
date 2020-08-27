@@ -5,13 +5,14 @@
 #include "Core/Lighting.h"
 #include "Core/Material.h"
 #include "Core/Objects/Object.h"
+#include "Core/Objects/Plane.h"
+#include "Core/Objects/Sphere.h"
+#include "Core/Pattern/StripePattern.h"
 #include "Core/PointLight.h"
 #include "Core/Ray.h"
-#include "Core/Objects/Sphere.h"
 #include "Core/Transform.h"
 #include "Core/Vector.h"
 #include "Core/World.h"
-#include "Core/Pattern/StripePattern.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -302,6 +303,104 @@ namespace Core
             Vec3D point(-2, 2, -2);
 
             Assert::IsFalse(Lighting::IsInShadow(world, point), L"The point must not be in shadow.");
+        }
+
+        TEST_METHOD(ReflectedColorForNonReflectiveMaterial)
+        {
+            World world = World::CreateDefault();
+            Ray ray(Vec3D(0.f), Vec3D(0, 0, 1));
+            Object* object = world.GetObjects()[1].get();
+            object->GetMaterial().SetAmbient(1.f);
+
+            Hit hit;
+            hit.distance = 1.f;
+            object->FillIntersectionInfo(hit, ray);
+
+            Vec3D color = Lighting::CalculateReflectedColor(world, &hit);
+
+            Assert::IsTrue(color.IsEqualWithEpsilon(Vec3D(0.f)));
+        }
+
+        TEST_METHOD(ReflectedColorForReflectiveMaterial)
+        {
+            World world = World::CreateDefault();
+            float f = sqrt(2.f) / 2.f;
+            Ray ray(Vec3D(0, 0, -3), Vec3D(0, -f, f));
+            Plane plane;
+            plane.GetMaterial().SetReflectivity(0.5f);
+            plane.SetTransform(Transform::Translation(0, -1, 0));
+            world.GetObjects().emplace_back(std::make_unique<Plane>(plane));
+
+            Hit hit;
+            hit.distance = sqrt(2.f);
+            plane.FillIntersectionInfo(hit, ray);
+
+            Vec3D color = Lighting::CalculateReflectedColor(world, &hit);
+
+            Assert::IsTrue(color.IsEqualWithEpsilon(Vec3D(0.19206f, 0.24007f, 0.14404f)));
+        }
+
+        TEST_METHOD(CalculateColorForReflectiveMaterial)
+        {
+            World world = World::CreateDefault();
+            float f = sqrt(2.f) / 2.f;
+            Ray ray(Vec3D(0, 0, -3), Vec3D(0, -f, f));
+            auto plane = std::make_unique<Plane>();
+            plane->GetMaterial().SetReflectivity(0.5f);
+            plane->SetTransform(Transform::Translation(0, -1, 0));
+            Object* planePtr = plane.get();
+            world.GetObjects().emplace_back(std::move(plane));
+
+            Hit hit;
+            hit.distance = sqrt(2.f);
+            planePtr->FillIntersectionInfo(hit, ray);
+
+            Vec3D color = Lighting::Calculate(world, &hit);
+
+            Assert::IsTrue(color.IsEqualWithEpsilon(Vec3D(0.87848f, 0.92649f, 0.83047f)));
+        }
+
+        TEST_METHOD(CalculateColorTwoParallelMirrors)
+        {
+            World world;
+            world.SetLight(PointLight(Vec3D(0), Vec3D(1, 1, 1)));
+
+            World::ObjectsVector& objects = world.GetObjects();
+            auto upperPlane = std::make_unique<Plane>();
+            upperPlane->GetMaterial().SetReflectivity(1.f);
+            upperPlane->SetTransform(Transform::Translation(0, -1, 0));
+            objects.emplace_back(std::move(upperPlane));
+
+            auto lowerPlane = std::make_unique<Plane>();
+            lowerPlane->GetMaterial().SetReflectivity(1.f);
+            lowerPlane->SetTransform(Transform::Translation(0, 1, 0));
+            objects.emplace_back(std::move(lowerPlane));
+
+            Ray ray(Vec3D(0, 0, -3), Vec3D(0, 1, 0));
+
+            Vec3D color = Lighting::Calculate(world, ray);
+
+            // To pass this test we should just reach this point
+            Assert::IsTrue(true);
+        }
+
+        TEST_METHOD(ReflectedColorForReflectiveMaterialZeroBounces)
+        {
+            World world = World::CreateDefault();
+            float f = sqrt(2.f) / 2.f;
+            Ray ray(Vec3D(0, 0, -3), Vec3D(0, -f, f));
+            Plane plane;
+            plane.GetMaterial().SetReflectivity(0.5f);
+            plane.SetTransform(Transform::Translation(0, -1, 0));
+            world.GetObjects().emplace_back(std::make_unique<Plane>(plane));
+
+            Hit hit;
+            hit.distance = sqrt(2.f);
+            plane.FillIntersectionInfo(hit, ray);
+
+            Vec3D color = Lighting::CalculateReflectedColor(world, &hit, 0);
+
+            Assert::IsTrue(color.IsEqualWithEpsilon(Vec3D(0.f)));
         }
     };
 }

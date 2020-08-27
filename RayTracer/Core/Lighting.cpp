@@ -52,7 +52,7 @@ Vec3D Lighting::Calculate(
     }
 }
 
-Vec3D Lighting::Calculate(const World& world, const Hit* hit)
+Vec3D Lighting::Calculate(const World& world, const Hit* hit, size_t bouncesLeft /*= Constants::BouncesCount*/)
 {
     if (!hit)
     {
@@ -62,13 +62,32 @@ Vec3D Lighting::Calculate(const World& world, const Hit* hit)
 
     const bool inShadow = Lighting::IsInShadow(world, hit->biasedPoint);
 
-    return Calculate(*hit->object, world.GetLight(), hit->point, hit->toEye, hit->normal, inShadow);
+    const Vec3D color = Calculate(*hit->object, world.GetLight(), hit->point, hit->toEye, hit->normal, inShadow);
+    const Vec3D reflectedColor = CalculateReflectedColor(world, hit, bouncesLeft);
+
+    return color + reflectedColor;
 }
 
-Vec3D Lighting::Calculate(const World& world, const Ray& ray)
+Vec3D Lighting::Calculate(const World& world, const Ray& ray, size_t bouncesLeft /*= Constants::BouncesCount*/)
 {
     CollisionInfo info = world.Intersect(ray);
-    return Calculate(world, info.GetFirstHit());
+    return Calculate(world, info.GetFirstHit(), bouncesLeft);
+}
+
+Vec3D Lighting::CalculateReflectedColor(const World& world, const Hit* hit, size_t bouncesLeft /*= Constants::BouncesCount*/)
+{
+    assert(hit->object);
+    if (bouncesLeft == 0 ||
+        !hit->object ||
+        Helpers::IsEqualWithEpsilon(hit->object->GetMaterial().GetReflectivity(), 0.f))
+    {
+        return Vec3D(0.f);
+    }
+
+    const Ray reflectedRay(hit->biasedPoint, hit->reflectedDir);
+    const Vec3D reflectedColor = Calculate(world, reflectedRay, --bouncesLeft);
+
+    return reflectedColor * hit->object->GetMaterial().GetReflectivity();
 }
 
 bool Lighting::IsInShadow(const World& world, const Vec3D& point)

@@ -24,8 +24,7 @@ CollisionInfo Sphere::Intersect(const Ray& ray) const
 
         Hit& hit = collisionInfo.hits.emplace_back();
         hit.distance = -b / (2.f * a);
-        hit.point = ray.GetPointAtDistance(hit.distance);
-        FillIntersectionInfo(hit, this, ray);
+        FillIntersectionInfo(hit, ray);
 
         return collisionInfo;
     }
@@ -35,13 +34,11 @@ CollisionInfo Sphere::Intersect(const Ray& ray) const
 
         Hit& hit1 = collisionInfo.hits.emplace_back();
         hit1.distance = (-b - sqrt(discriminant)) / (2.f * a);
-        hit1.point = ray.GetPointAtDistance(hit1.distance);
-        FillIntersectionInfo(hit1, this, ray);
+        FillIntersectionInfo(hit1, ray);
 
         Hit& hit2 = collisionInfo.hits.emplace_back();
         hit2.distance = (-b + sqrt(discriminant)) / (2.f * a);
-        hit2.point = ray.GetPointAtDistance(hit2.distance);
-        FillIntersectionInfo(hit2, this, ray);
+        FillIntersectionInfo(hit2, ray);
 
         return collisionInfo;
     }

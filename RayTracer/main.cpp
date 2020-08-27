@@ -23,7 +23,7 @@ int main()
 {
     World world;
     std::vector<std::unique_ptr<Object>>& objects = world.GetObjects();
-    std::unique_ptr<Pattern> pattern = std::make_unique<CheckerPattern>(Vec3D(1.f, 0, 1.f), Vec3D(0.f, 0, 0));
+    std::unique_ptr<Pattern> pattern = std::make_unique<CheckerPattern>(Vec3D(1.f, 1.f, 1.f), Vec3D(0.f, 0, 0));
 
     Plane floor;
     Material floorMat = floor.GetMaterial();
@@ -52,9 +52,10 @@ int main()
     Sphere middle;
     middle.SetTransform(Transform::Translation(-0.5f, 1, 0.5f));
     Material middleMat = middle.GetMaterial();
-    middleMat.SetColor(Vec3D(0.1f, 1, 0.5f));
-    middleMat.SetDiffuse(0.7f);
-    middleMat.SetSpecular(0.3f);
+    middleMat.SetColor(Vec3D(1.f));
+    middleMat.SetDiffuse(0.0f);
+    middleMat.SetSpecular(0.2f);
+    middleMat.SetReflectivity(0.9f);
     middle.SetMaterial(middleMat);
     objects.push_back(std::make_unique<Sphere>(middle));
 
@@ -85,7 +86,7 @@ int main()
     PointLight pointLight(Vec3D(-10, 10, -10), Vec3D(1, 1, 1));
     world.SetLight(pointLight);
 
-    Camera camera(Vec2Du(360, 240), 75);
+    Camera camera(Vec2Du(320, 240), 75);
     camera.SetTransform(Transform::LookAt(Vec3D(0, 1.5f, -5), Vec3D(0, 1, 0)));
 
     Canvas canvas = camera.Render(world);
