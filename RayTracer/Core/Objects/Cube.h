@@ -2,9 +2,14 @@
 
 #include "Object.h"
 
-class Plane : public Object
+class Cube : public Object
 {
-protected:
+public:
     virtual CollisionInfo IntersectInternal(const Ray& localRay) const override;
+
+protected:
     virtual Vec3D LocalNormalAt(const Vec3D& point) const override;
+
+private:
+    Vec2D CheckAxis(float origin, float direction) const;
 };

@@ -3,20 +3,19 @@
 #include "RayTracer/Core/CollisionInfo.h"
 #include "RayTracer/Core/Ray.h"
 
-CollisionInfo Plane::IntersectInternal(const Ray& ray) const
+CollisionInfo Plane::IntersectInternal(const Ray& localRay) const
 {
-    const Ray localRay = ray.Transform(GetTransform().Inverse());
-
     if (abs(localRay.GetDirection().y) < Constants::Epsilon)
     {
         return CollisionInfo();
     }
 
+    const Ray ray = localRay.Transform(GetTransform());
+
     CollisionInfo collisionInfo;
 
-    Hit& hit1 = collisionInfo.hits.emplace_back();
-    hit1.distance = -localRay.GetOrigin().y / localRay.GetDirection().y;
-    FillIntersectionInfo(hit1, ray);
+    const float distance = -localRay.GetOrigin().y / localRay.GetDirection().y;
+    Hit& hit1 = collisionInfo.hits.emplace_back(distance, this);
 
     return collisionInfo;
 }

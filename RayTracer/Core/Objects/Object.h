@@ -25,7 +25,7 @@ public:
 
     // TODO: The object shouldn't be responsible for this logic
     CollisionInfo Intersect(const Ray& ray) const;
-    virtual CollisionInfo IntersectInternal(const Ray& ray) const = 0;
+    virtual CollisionInfo IntersectInternal(const Ray& localRay) const = 0;
 
     // TODO: This should lie in the same component as Intersect method
     void FillIntersectionInfo(Hit& hit, const Ray& ray, const CollisionInfo& info = CollisionInfo()) const;

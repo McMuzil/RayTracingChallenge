@@ -9,15 +9,16 @@
 #include "Core/Lighting.h"
 #include "Core/Material.h"
 #include "Core/Matrix.h"
+#include "Core/Objects/Cube.h"
 #include "Core/Objects/Plane.h"
 #include "Core/Objects/Sphere.h"
+#include "Core/Pattern/CheckerPattern.h"
 #include "Core/Pattern/StripePattern.h"
 #include "Core/PointLight.h"
 #include "Core/Ray.h"
 #include "Core/Transform.h"
 #include "Core/Vector.h"
 #include "Core/World.h"
-#include "Core/Pattern/CheckerPattern.h"
 
 int main()
 {
@@ -74,22 +75,26 @@ int main()
     right.SetMaterial(rightMat);
     objects.push_back(std::make_unique<Sphere>(right));
 
-    Sphere left;
+    Cube left;
     left.SetTransform(
-        Transform::Translation(-1.5f, 0.33f, -0.75f) *
+        Transform::Translation(-1.5f, 0.7f, -0.75f) *
+        Transform::RotationX(Helpers::ToRad(45.f)) * Transform::RotationY(Helpers::ToRad(45.f)) * Transform::RotationZ(Helpers::ToRad(45.f)) *
         Transform::Scaling(0.33f, 0.33f, 0.33f)
     );
     Material leftMat = left.GetMaterial();
-    leftMat.SetColor(Vec3D(1.f, 0.9f, 0.1f));
-    leftMat.SetDiffuse(0.7f);
-    leftMat.SetSpecular(0.3f);
+    leftMat.SetColor(Vec3D(0.0f, 0.f, 0.f));
+    leftMat.SetDiffuse(0.0f);
+    leftMat.SetSpecular(0.6f);
+    leftMat.SetReflectivity(1.f);
+    leftMat.SetTransparency(1.f);
+    leftMat.SetRefractiveIndex(1.4f);
     left.SetMaterial(leftMat);
-    objects.push_back(std::make_unique<Sphere>(left));
+    objects.push_back(std::make_unique<Cube>(left));
 
     PointLight pointLight(Vec3D(-10, 10, -10), Vec3D(1, 1, 1));
     world.SetLight(pointLight);
 
-    Camera camera(Vec2Du(1080, 720), 75);
+    Camera camera(Vec2Du(360, 240), 75);
     camera.SetTransform(Transform::LookAt(Vec3D(0, 1.5f, -5), Vec3D(0, 1, 0)));
 
     Canvas canvas = camera.Render(world);

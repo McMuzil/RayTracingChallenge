@@ -43,7 +43,9 @@ Vec3D Object::GetColorAt(const Vec3D& point) const
 
 CollisionInfo Object::Intersect(const Ray& ray) const
 {
-    CollisionInfo info = IntersectInternal(ray);
+    const Ray rayInv = ray.Transform(GetTransform().Inverse());
+
+    CollisionInfo info = IntersectInternal(rayInv);
 
     Hit* hit = info.GetFirstHit();
     if (hit)

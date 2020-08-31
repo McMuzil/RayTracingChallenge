@@ -3,13 +3,12 @@
 #include "RayTracer/Core/Ray.h"
 #include "RayTracer/Core/CollisionInfo.h"
 
-CollisionInfo Sphere::IntersectInternal(const Ray& ray) const
+CollisionInfo Sphere::IntersectInternal(const Ray& localRay) const
 {
-    const Ray rayInv = ray.Transform(GetTransform().Inverse());
-    const Vec3D sphereToRay = rayInv.GetOrigin();
+    const Vec3D sphereToRay = localRay.GetOrigin();
 
-    const float a = rayInv.GetDirection().Dot(rayInv.GetDirection());
-    const float b = 2.f * rayInv.GetDirection().Dot(sphereToRay);
+    const float a = localRay.GetDirection().Dot(localRay.GetDirection());
+    const float b = 2.f * localRay.GetDirection().Dot(sphereToRay);
     const float c = sphereToRay.Dot(sphereToRay) - 1.f;
 
     const float discriminant = b * b - 4 * a * c;
@@ -18,13 +17,15 @@ CollisionInfo Sphere::IntersectInternal(const Ray& ray) const
     {
         return CollisionInfo();
     }
-    else if (Helpers::IsEqualWithEpsilon(discriminant, 0.f))
+    
+    const Ray ray = localRay.Transform(GetTransform());
+
+    if (Helpers::IsEqualWithEpsilon(discriminant, 0.f))
     {
         CollisionInfo collisionInfo;
 
-        Hit& hit = collisionInfo.hits.emplace_back();
-        hit.distance = -b / (2.f * a);
-        FillIntersectionInfo(hit, ray);
+        const float distance = -b / (2.f * a);
+        Hit& hit = collisionInfo.hits.emplace_back(distance, this);
 
         return collisionInfo;
     }
@@ -32,13 +33,11 @@ CollisionInfo Sphere::IntersectInternal(const Ray& ray) const
     {
         CollisionInfo collisionInfo;
 
-        Hit& hit1 = collisionInfo.hits.emplace_back();
-        hit1.distance = (-b - sqrt(discriminant)) / (2.f * a);
-        FillIntersectionInfo(hit1, ray);
+        const float distance1 = (-b - sqrt(discriminant)) / (2.f * a);
+        Hit& hit1 = collisionInfo.hits.emplace_back(distance1, this);
 
-        Hit& hit2 = collisionInfo.hits.emplace_back();
-        hit2.distance = (-b + sqrt(discriminant)) / (2.f * a);
-        FillIntersectionInfo(hit2, ray);
+        const float distance2 = (-b + sqrt(discriminant)) / (2.f * a);
+        Hit& hit2 = collisionInfo.hits.emplace_back(distance2, this);
 
         return collisionInfo;
     }

@@ -5,6 +5,6 @@
 class Sphere : public Object
 {
 protected:
-    CollisionInfo IntersectInternal(const Ray& ray) const override;
+    CollisionInfo IntersectInternal(const Ray& localRay) const override;
     Vec3D LocalNormalAt(const Vec3D& localPoint) const override;
 };
