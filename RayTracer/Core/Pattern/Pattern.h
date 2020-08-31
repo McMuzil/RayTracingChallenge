@@ -1,8 +1,8 @@
 #pragma once
-#include "vector"
-#include "Core/Vector.h"
-#include "Core/ICloneable.h"
-#include "Core/Matrix.h"
+#include <vector>
+#include "RayTracer/Core/ICloneable.h"
+#include "RayTracer/Core/Matrix.h"
+#include "RayTracer/Core/Vector.h"
 
 class Pattern : public ICloneable
 {

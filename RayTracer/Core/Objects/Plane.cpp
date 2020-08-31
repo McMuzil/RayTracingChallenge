@@ -1,9 +1,9 @@
 #include "Plane.h"
 
-#include "Core/CollisionInfo.h"
-#include "Core/Ray.h"
+#include "RayTracer/Core/CollisionInfo.h"
+#include "RayTracer/Core/Ray.h"
 
-CollisionInfo Plane::Intersect(const Ray& ray) const
+CollisionInfo Plane::IntersectInternal(const Ray& ray) const
 {
     const Ray localRay = ray.Transform(GetTransform().Inverse());
 

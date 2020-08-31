@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "Core/Material.h"
+#include "RayTracer/Core/Material.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -20,6 +20,8 @@ namespace Core
             Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetSpecular(), 0.9f));
             Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetShininess(), 200.f));
             Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetReflectivity(), 0.f));
+            Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetTransparency(), 0.f));
+            Assert::IsTrue(Helpers::IsEqualWithEpsilon(material.GetRefractiveIndex(), 1.f));
         }
     };
 }

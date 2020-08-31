@@ -1,4 +1,4 @@
-#include "Core/Camera.h"
+#include "RayTracer/Core/Camera.h"
 
 #include "Canvas.h"
 #include "Lighting.h"

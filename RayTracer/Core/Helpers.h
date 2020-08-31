@@ -3,9 +3,10 @@
 #include <assert.h>
 #include <cstdlib>
 #include <limits>
+#include <memory>
 #include <vector>
 
-#include "Core/Constants.h"
+#include "RayTracer/Core/Constants.h"
 
 namespace Helpers
 {
@@ -34,21 +35,21 @@ namespace Helpers
         );
     }
 
-    template<typename A, typename B>
-    std::unique_ptr<A> StaticCastPtr(std::unique_ptr<B>& base)
+    template<typename ToType, typename FromType>
+    std::unique_ptr<ToType> StaticCastPtr(std::unique_ptr<FromType>& base)
     {
-        B* p = base.release();
-        assert(dynamic_cast<A*>(p));
+        FromType* p = base.release();
+        assert(dynamic_cast<ToType*>(p));
 
-        return std::unique_ptr<A>(static_cast<A*>(p));
+        return std::unique_ptr<ToType>(static_cast<ToType*>(p));
     }
 
-    template<typename A, typename B>
-    std::unique_ptr<A> StaticCastPtr(std::unique_ptr<B>&& base)
+    template<typename ToType, typename FromType>
+    std::unique_ptr<ToType> StaticCastPtr(std::unique_ptr<FromType>&& base)
     {
-        B* p = base.release();
-        assert(dynamic_cast<A*>(p));
+        FromType* p = base.release();
+        assert(dynamic_cast<ToType*>(p));
 
-        return std::unique_ptr<A>(static_cast<A*>(p));
+        return std::unique_ptr<ToType>(static_cast<ToType*>(p));
     }
-};
+}

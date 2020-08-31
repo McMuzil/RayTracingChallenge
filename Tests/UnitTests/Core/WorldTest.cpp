@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "Core/Material.h"
-#include "Core/PointLight.h"
-#include "Core/Objects/Sphere.h"
-#include "Core/Transform.h"
-#include "Core/World.h"
-#include "Core/Ray.h"
-#include "Core/CollisionInfo.h"
+
+#include "RayTracer/Core/CollisionInfo.h"
+#include "RayTracer/Core/Material.h"
+#include "RayTracer/Core/Objects/Sphere.h"
+#include "RayTracer/Core/PointLight.h"
+#include "RayTracer/Core/Ray.h"
+#include "RayTracer/Core/Transform.h"
+#include "RayTracer/Core/World.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

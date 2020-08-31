@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "Core/Objects/Sphere.h"
-#include "Core/Transform.h"
+#include "RayTracer/Core/Objects/Sphere.h"
+#include "RayTracer/Core/Transform.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

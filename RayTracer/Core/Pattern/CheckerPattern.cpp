@@ -1,4 +1,4 @@
-#include "Core/Pattern/CheckerPattern.h"
+#include "RayTracer/Core/Pattern/CheckerPattern.h"
 
 Vec3D CheckerPattern::GetColorAt(const Vec3D& position) const
 {

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "Core/PointLight.h"
+#include "RayTracer/Core/PointLight.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

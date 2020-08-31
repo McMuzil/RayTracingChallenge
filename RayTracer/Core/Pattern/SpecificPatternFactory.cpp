@@ -1,7 +1,7 @@
-#include "Core/Pattern/SpecificPatternFactory.h"
+#include "RayTracer/Core/Pattern/SpecificPatternFactory.h"
 
 #include "CheckerPattern.h"
-#include "Core/Vector.h"
+#include "RayTracer/Core/Vector.h"
 #include "Pattern.h"
 #include "PatternFactory.h"
 #include "StripePattern.h"

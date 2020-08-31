@@ -1,12 +1,10 @@
 #pragma once
 
-#include "Core/Objects/Object.h"
+#include "RayTracer/Core/Objects/Object.h"
 
 class Sphere : public Object
 {
-public:
-    CollisionInfo Intersect(const Ray& ray) const override;
-
 protected:
+    CollisionInfo IntersectInternal(const Ray& ray) const override;
     Vec3D LocalNormalAt(const Vec3D& localPoint) const override;
 };

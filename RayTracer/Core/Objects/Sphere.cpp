@@ -1,9 +1,9 @@
-#include "Core/Objects/Sphere.h"
+#include "RayTracer/Core/Objects/Sphere.h"
 
-#include "Core/Ray.h"
-#include "Core/CollisionInfo.h"
+#include "RayTracer/Core/Ray.h"
+#include "RayTracer/Core/CollisionInfo.h"
 
-CollisionInfo Sphere::Intersect(const Ray& ray) const
+CollisionInfo Sphere::IntersectInternal(const Ray& ray) const
 {
     const Ray rayInv = ray.Transform(GetTransform().Inverse());
     const Vec3D sphereToRay = rayInv.GetOrigin();

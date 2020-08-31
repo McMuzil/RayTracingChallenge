@@ -41,12 +41,14 @@
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\World.h" />
+    <ClInclude Include="Core\ObjectHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\Canvas.cpp" />
     <ClCompile Include="Core\Lighting.cpp" />
     <ClCompile Include="Core\Material.cpp" />
+    <ClCompile Include="Core\ObjectHelpers.cpp" />
     <ClCompile Include="Core\Objects\Object.cpp" />
     <ClCompile Include="Core\Objects\Plane.cpp" />
     <ClCompile Include="Core\Pattern\CheckerPattern.cpp" />
@@ -112,20 +114,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath)$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath)$(SolutionDir)</IncludePath>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath)$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath)$(SolutionDir)</IncludePath>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -1,4 +1,4 @@
-#include "Core/Pattern/Pattern.h"
+#include "RayTracer/Core/Pattern/Pattern.h"
 
 Pattern::~Pattern()
 {

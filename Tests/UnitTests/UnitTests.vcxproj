@@ -78,22 +78,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <ReferencePath>$(VC_ReferencesPath_x86); </ReferencePath>
-    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath);$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath);$(SolutionDir)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <ReferencePath>$(VC_ReferencesPath_x64); </ReferencePath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <ReferencePath>$(VC_ReferencesPath_x86); </ReferencePath>
-    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath);$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(DXSDK_DIR)\include;$(ProjectDir);$(IncludePath);$(SolutionDir)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <ReferencePath>$(VC_ReferencesPath_x64); </ReferencePath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)RayTracer</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -203,6 +203,7 @@
     <ClCompile Include="Core\VectorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\PatternMockup.h" />
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

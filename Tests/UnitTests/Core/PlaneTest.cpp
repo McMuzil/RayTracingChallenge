@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "Core\Objects\Plane.h"
-#include "Core\Ray.h"
-#include "Core\CollisionInfo.h"
+#include "RayTracer/Core/CollisionInfo.h"
+#include "RayTracer/Core/Objects/Plane.h"
+#include "RayTracer/Core/Ray.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

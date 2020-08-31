@@ -1,4 +1,4 @@
-#include "Core/Pattern/PatternFactory.h"
+#include "RayTracer/Core/Pattern/PatternFactory.h"
 
 PatternFactory::PatternFactory()
 {

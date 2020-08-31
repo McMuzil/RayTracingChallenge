@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "Core/Helpers.h"
-#include "Core/Vector.h"
-#include "Core/Canvas.h"
+#include "RayTracer/Core/Canvas.h"
+#include "RayTracer/Core/Helpers.h"
+#include "RayTracer/Core/Vector.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

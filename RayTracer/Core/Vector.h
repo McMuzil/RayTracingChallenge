@@ -1,10 +1,10 @@
 #pragma once
 
 #include <array>
-#include "assert.h"
+#include <assert.h>
 
-#include "Core/Constants.h"
-#include "Core/Helpers.h"
+#include "RayTracer/Core/Constants.h"
+#include "RayTracer/Core/Helpers.h"
 
 namespace
 {

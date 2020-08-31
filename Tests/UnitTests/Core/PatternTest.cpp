@@ -1,31 +1,15 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "Core/Material.h"
-#include "Core/Objects/Sphere.h"
-#include "Core/Pattern/Pattern.h"
-#include "Core/Pattern/PatternFactory.h"
-#include "Core/Pattern/SpecificPatternFactory.h"
-#include "Core/Pattern/StripePattern.h"
-#include "Core/Transform.h"
-#include "Core/Vector.h"
-
-class PatternMockup : public Pattern
-{
-public:
-    using Pattern::Pattern;
-
-    Vec3D GetColorAt(const Vec3D& position) const override
-    {
-        return position;
-    }
-
-    std::unique_ptr<ICloneable> Clone() const override
-    {
-        PatternMockup pattern(*this);
-        return std::make_unique<PatternMockup>(pattern);
-    }
-};
+#include "RayTracer/Core/Material.h"
+#include "RayTracer/Core/Objects/Sphere.h"
+#include "RayTracer/Core/Pattern/Pattern.h"
+#include "RayTracer/Core/Pattern/PatternFactory.h"
+#include "RayTracer/Core/Pattern/SpecificPatternFactory.h"
+#include "RayTracer/Core/Pattern/StripePattern.h"
+#include "RayTracer/Core/Transform.h"
+#include "RayTracer/Core/Vector.h"
+#include "Tests/UnitTests/Core/PatternMockup.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

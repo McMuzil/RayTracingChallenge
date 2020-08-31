@@ -65,9 +65,12 @@ int main()
         Transform::Scaling(0.5f, 0.5f, 0.5f)
     );
     Material rightMat = right.GetMaterial();
-    rightMat.SetColor(Vec3D(0.5f, 1, 0.1f));
-    rightMat.SetDiffuse(0.7f);
+    rightMat.SetColor(Vec3D(0.f));
+    rightMat.SetDiffuse(0.0f);
     rightMat.SetSpecular(0.3f);
+    rightMat.SetReflectivity(1.f);
+    rightMat.SetRefractiveIndex(0.8f);
+    rightMat.SetTransparency(1.f);
     right.SetMaterial(rightMat);
     objects.push_back(std::make_unique<Sphere>(right));
 
@@ -86,7 +89,7 @@ int main()
     PointLight pointLight(Vec3D(-10, 10, -10), Vec3D(1, 1, 1));
     world.SetLight(pointLight);
 
-    Camera camera(Vec2Du(320, 240), 75);
+    Camera camera(Vec2Du(1080, 720), 75);
     camera.SetTransform(Transform::LookAt(Vec3D(0, 1.5f, -5), Vec3D(0, 1, 0)));
 
     Canvas canvas = camera.Render(world);

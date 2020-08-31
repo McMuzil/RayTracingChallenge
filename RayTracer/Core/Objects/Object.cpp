@@ -1,8 +1,8 @@
-#include "Core/Objects/Object.h"
+#include "RayTracer/Core/Objects/Object.h"
 
-#include "Core/CollisionInfo.h"
-#include "Core/Pattern/Pattern.h"
-#include "Core/Ray.h"
+#include "RayTracer/Core/CollisionInfo.h"
+#include "RayTracer/Core/Pattern/Pattern.h"
+#include "RayTracer/Core/Ray.h"
 
 Object::~Object()
 {
@@ -41,7 +41,20 @@ Vec3D Object::GetColorAt(const Vec3D& point) const
     return materialColor;
 }
 
-void Object::FillIntersectionInfo(Hit& hit, const Ray& ray) const
+CollisionInfo Object::Intersect(const Ray& ray) const
+{
+    CollisionInfo info = IntersectInternal(ray);
+
+    Hit* hit = info.GetFirstHit();
+    if (hit)
+    {
+        FillIntersectionInfo(*hit, ray, info);
+    }
+
+    return info;
+}
+
+void Object::FillIntersectionInfo(Hit& hit, const Ray& ray, const CollisionInfo& info /*= CollisionInfo()*/) const
 {
     hit.point = ray.GetPointAtDistance(hit.distance);
     hit.object = this;
@@ -52,6 +65,43 @@ void Object::FillIntersectionInfo(Hit& hit, const Ray& ray) const
         hit.inside = true;
         hit.normal = -hit.normal;
     }
-    hit.biasedPoint = hit.point + hit.normal * Constants::ShadowBias;
+    hit.biasedAbove = hit.point + hit.normal * Constants::BiasAbove;
+    hit.biasedBelow = hit.point - hit.normal * Constants::BiasBelow;
     hit.reflectedDir = Vec3D::Reflect(ray.GetDirection(), hit.normal);
+    hit.refractiveIndexFrom = 1.f;
+    hit.refractiveIndexTo = GetMaterial().GetRefractiveIndex();
+    FillRefractionIndices(hit, info);
+}
+
+void Object::FillRefractionIndices(Hit& hit, const CollisionInfo& info) const
+{
+    if (info.hits.empty())
+    {
+        return;
+    }
+
+    std::vector<const Object*> containerObjects;
+    for (const Hit& iHit : info.hits)
+    {
+        if (&iHit == &hit)
+        {
+            hit.refractiveIndexFrom = containerObjects.empty() ? 1.f : containerObjects[containerObjects.size() - 1]->GetMaterial().GetRefractiveIndex();
+        }
+
+        auto it = std::find(containerObjects.begin(), containerObjects.end(), iHit.object);
+        if (it != containerObjects.cend())
+        {
+            containerObjects.erase(it);
+        }
+        else
+        {
+            containerObjects.emplace_back(iHit.object);
+        }
+
+        if (&iHit == &hit)
+        {
+            hit.refractiveIndexTo = containerObjects.empty() ? 1.f : containerObjects[containerObjects.size() - 1]->GetMaterial().GetRefractiveIndex();
+            break;
+        }
+    }
 }

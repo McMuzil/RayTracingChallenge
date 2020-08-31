@@ -1,4 +1,4 @@
-#include "Core/Pattern/StripePattern.h"
+#include "RayTracer/Core/Pattern/StripePattern.h"
 
 Vec3D StripePattern::GetColorAt(const Vec3D& position) const
 {

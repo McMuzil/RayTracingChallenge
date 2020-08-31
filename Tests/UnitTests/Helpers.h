@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Material.h"
+#include "RayTracer/Core/Material.h"
 #include "CppUnitTestAssert.h"
 
 namespace Microsoft

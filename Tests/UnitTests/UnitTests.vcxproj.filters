@@ -25,6 +25,7 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Core\PatternMockup.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

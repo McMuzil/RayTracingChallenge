@@ -29,6 +29,7 @@
     <ClInclude Include="Core\Objects\Sphere.h" />
     <ClInclude Include="Core\Objects\Plane.h" />
     <ClInclude Include="Core\Pattern\CheckerPattern.h" />
+    <ClInclude Include="Core\ObjectHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Core\Objects\Sphere.cpp" />
     <ClCompile Include="Core\Objects\Plane.cpp" />
     <ClCompile Include="Core\Pattern\CheckerPattern.cpp" />
+    <ClCompile Include="Core\ObjectHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

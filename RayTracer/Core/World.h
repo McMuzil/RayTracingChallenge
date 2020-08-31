@@ -1,5 +1,5 @@
 #pragma once
-#include "Core/Objects/Object.h"
+#include "RayTracer/Core/Objects/Object.h"
 #include "PointLight.h"
 #include "vector"
 

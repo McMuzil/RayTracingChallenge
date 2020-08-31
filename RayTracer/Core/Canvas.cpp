@@ -1,4 +1,4 @@
-#include "Core/Canvas.h"
+#include "RayTracer/Core/Canvas.h"
 
 #include <algorithm>
 #include <sstream>
