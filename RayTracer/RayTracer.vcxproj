@@ -29,6 +29,7 @@
     <ClInclude Include="Core\Matrix.h" />
     <ClInclude Include="Core\Helpers.h" />
     <ClInclude Include="Core\Objects\Cube.h" />
+    <ClInclude Include="Core\Objects\Group.h" />
     <ClInclude Include="Core\Objects\Object.h" />
     <ClInclude Include="Core\Objects\Plane.h" />
     <ClInclude Include="Core\Pattern\CheckerPattern.h" />
@@ -51,6 +52,7 @@
     <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\ObjectHelpers.cpp" />
     <ClCompile Include="Core\Objects\Cube.cpp" />
+    <ClCompile Include="Core\Objects\Group.cpp" />
     <ClCompile Include="Core\Objects\Object.cpp" />
     <ClCompile Include="Core\Objects\Plane.cpp" />
     <ClCompile Include="Core\Pattern\CheckerPattern.cpp" />

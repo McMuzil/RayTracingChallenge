@@ -17,6 +17,13 @@ namespace Core
             return std::make_unique<Sphere>();
         }
 
+        TEST_METHOD(ObjectHasParentAttribute)
+        {
+            std::unique_ptr<Object> object = TestObject();
+
+            Assert::IsNull(object->GetParent());
+        }
+
         TEST_METHOD(DefaultTransformation)
         {
             std::unique_ptr<Object> object = TestObject();

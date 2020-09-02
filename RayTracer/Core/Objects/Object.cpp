@@ -11,22 +11,35 @@ Object::~Object()
 
 Vec3D Object::NormalAt(const Vec3D& point) const
 {
-    const Matrix<4, 4> inverseTrans = GetTransform().Inverse();
-    const Vec3D pointObjSpace = inverseTrans * point.AsPoint();
+    const Vec3D pointObjSpace = ToObjectSpace(point);
     const Vec3D normalObjSpace = LocalNormalAt(pointObjSpace);
-    const Vec3D normalWorldSpace = inverseTrans.Transpose() * normalObjSpace.AsPoint();
+    const Vec3D normalWorldSpace = ToWorldSpace(normalObjSpace);
 
     return normalWorldSpace.Normalize();
 }
 
-Vec3D Object::FromObjectSpace(const Vec3D& vec) const
+Vec3D Object::ToWorldSpace(const Vec3D& vec) const
 {
-    return m_transform * vec.AsPoint();
+    Vec3D localPoint = m_transform.Inverse().Transpose() * vec.AsPoint();
+
+    if (m_parent)
+    {
+        localPoint = m_parent->ToWorldSpace(localPoint);
+    }
+
+    return localPoint;
 }
 
 Vec3D Object::ToObjectSpace(const Vec3D& vec) const
 {
-    return m_transform.Inverse() * vec.AsPoint();
+    Vec3D localPoint = vec;
+
+    if (m_parent)
+    {
+        localPoint = m_parent->ToObjectSpace(vec);
+    }
+
+    return m_transform.Inverse() * localPoint.AsPoint();
 }
 
 Vec3D Object::GetColorAt(const Vec3D& point) const
@@ -50,7 +63,8 @@ CollisionInfo Object::Intersect(const Ray& ray) const
     Hit* hit = info.GetFirstHit();
     if (hit)
     {
-        FillIntersectionInfo(*hit, ray, info);
+        assert(hit->object);
+        hit->object->FillIntersectionInfo(*hit, ray, info);
     }
 
     return info;

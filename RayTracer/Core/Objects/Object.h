@@ -23,6 +23,9 @@ public:
     Material& GetMaterial() { return m_material; }
     void SetMaterial(const Material& val) { m_material = val; }
 
+    Object* GetParent() const { return m_parent; }
+    void SetParent(Object* val) { m_parent = val; }
+
     // TODO: The object shouldn't be responsible for this logic
     CollisionInfo Intersect(const Ray& ray) const;
     virtual CollisionInfo IntersectInternal(const Ray& localRay) const = 0;
@@ -31,7 +34,7 @@ public:
     void FillIntersectionInfo(Hit& hit, const Ray& ray, const CollisionInfo& info = CollisionInfo()) const;
     void FillRefractionIndices(Hit& hit, const CollisionInfo& info) const;
 
-    Vec3D FromObjectSpace(const Vec3D& vec) const;
+    Vec3D ToWorldSpace(const Vec3D& vec) const;
     Vec3D ToObjectSpace(const Vec3D& vec) const;
 
     Vec3D GetColorAt(const Vec3D& point) const;
@@ -47,4 +50,5 @@ protected:
 protected:
     Matrix<4, 4> m_transform = Matrix<4, 4>::Identity();
     Material m_material;
+    Object* m_parent = nullptr;
 };

@@ -22,6 +22,7 @@
     <ClCompile Include="Core\PlaneTest.cpp" />
     <ClCompile Include="Core\ObjectTest.cpp" />
     <ClCompile Include="Core\CubeTest.cpp" />
+    <ClCompile Include="Core\GroupTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

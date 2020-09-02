@@ -184,6 +184,7 @@
     <ClCompile Include="Core\CanvasTest.cpp" />
     <ClCompile Include="Core\CollisionTest.cpp" />
     <ClCompile Include="Core\CubeTest.cpp" />
+    <ClCompile Include="Core\GroupTest.cpp" />
     <ClCompile Include="Core\HelpersTest.cpp" />
     <ClCompile Include="Core\LightingTest.cpp" />
     <ClCompile Include="Core\MaterialTest.cpp" />

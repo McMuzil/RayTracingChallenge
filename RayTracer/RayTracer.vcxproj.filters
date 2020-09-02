@@ -31,6 +31,7 @@
     <ClInclude Include="Core\Pattern\CheckerPattern.h" />
     <ClInclude Include="Core\ObjectHelpers.h" />
     <ClInclude Include="Core\Objects\Cube.h" />
+    <ClInclude Include="Core\Objects\Group.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="Core\Pattern\CheckerPattern.cpp" />
     <ClCompile Include="Core\ObjectHelpers.cpp" />
     <ClCompile Include="Core\Objects\Cube.cpp" />
+    <ClCompile Include="Core\Objects\Group.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
